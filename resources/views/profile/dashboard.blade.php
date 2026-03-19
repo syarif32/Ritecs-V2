@@ -1,24 +1,34 @@
 @extends('layouts.profile')
 
 @section('content')
-<div class="d-flex justify-content-between w-100 mb-2">
-    <span class="text-dark mb-4 d-none d-md-flex">
-        <img src="{{ asset('assets/img/team-1.jpg') }}" class="bg-dark rounded object-fit-cover img-profile-profile me-3" alt="">
+
+<div class="d-flex justify-content-between w-100 my-2">
+    <span class="text-dark mb-4 d-flex">
+        <img src="{{ asset($user->img_path ?? 'assets/users/profile/profile_default.jpg') }}" 
+            class="bg-dark rounded object-fit-cover img-profile-profile me-3" 
+            alt="Foto {{ $user->first_name }}">
         <div class="nama-profile">
-            <h5 class="mb-0 fw-bold">Hallo, Anur Mustakim </h5>
-            <span class="normal-text text-member bg-primary small">Membership</span>
+            <h5 class="mb-0 fw-bold">
+                {{ $user->first_name }} {{ $user->last_name }}
+            </h5>
+            @if($membership)
+                <span class="normal-text text-member bg-primary small">Membership Aktif</span>
+            @else
+                <span class="normal-text text-member bg-warning small">Membership NonAktif</span>
+            @endif
         </div>
     </span>
     <span class="d-none d-md-flex flex-nowrap text-nowrap small">
-        <a href="" class="normal-text">Profile/</a>
+        <a href="#" class="normal-text">Profile/</a>
         <a href="#" class="text-dark">Dashboard</a>
     </span>
 </div>
+
 <div class="dashboard mb-5">    
     <div class="row g-3">
         <!-- Card Statistik -->
         <div class="col-md-4">
-            <div class="card card-dashboard rounded ">
+            <div class="card card-dashboard rounded h-100 shadow-none border">
                 <div class="card-body">
                     <h6 class="card-title text-muted">Total Publikasi</h6>
                     <h3 class="fw-bold text-dark">12</h3>
@@ -27,7 +37,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card card-dashboard rounded border border-primary">
+            <div class="card card-dashboard rounded border border-primary h-100">
                 <div class="card-body">
                     <h6 class="card-title text-muted">Member Aktif</h6>
                     <h3 class="fw-bold text-primary">58 <span class="h4 text-primary">Hari</span></h3>
@@ -36,7 +46,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card card-dashboard rounded h-100">
+            <div class="card card-dashboard rounded h-100 shadow-none border">
                 <div class="card-body ">
                     <h6 class="card-title text-muted">Unduhan</h6>
                     <h3 class="fw-bold normal-text">24</h3>

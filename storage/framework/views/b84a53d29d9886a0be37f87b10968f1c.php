@@ -1,0 +1,77 @@
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="<?php echo e(asset('assets/lib/wow/wow.min.js')); ?>"></script>
+        <script src="<?php echo e(asset('assets/lib/easing/easing.min.js')); ?>"></script>
+        <script src="<?php echo e(asset('assets/lib/waypoints/waypoints.min.js')); ?>"></script>
+        <script src="<?php echo e(asset('assets/lib/counterup/counterup.min.js')); ?>"></script>
+        <script src="<?php echo e(asset('assets/lib/lightbox/js/lightbox.min.js')); ?>"></script>
+        <script src="<?php echo e(asset('assets/lib/owlcarousel/owl.carousel.min.js')); ?>"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- Template Javascript -->
+        <script src="<?php echo e(asset('assets/js/main.js')); ?>"></script>
+<script>
+    function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        
+        // Pengecekan null safety (agar tidak error jika elemen tidak ada di halaman tersebut)
+        if (input && icon) {
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+    }
+</script>
+
+
+<?php if(auth()->guard()->guest()): ?>
+    <?php
+       
+        $currentRoute = request()->route() ? request()->route()->getName() : '';
+        
+        $blacklistedRoutes = [
+            'password.request', 
+            'password.reset',  
+            'password.email',  
+            'password.update'  
+        ];
+
+     $isResetPage = in_array($currentRoute, $blacklistedRoutes);
+    ?>
+
+    
+    <?php if(!$isResetPage && (session('status') || $errors->any() || session('login_required') || request()->get('auth') === 'login')): ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var modalElement = document.getElementById('authModal');
+                
+               
+                if (modalElement) {
+                    const authModal = new bootstrap.Modal(modalElement);
+                    const authContainer = document.querySelector(".auth-container");
+
+                    
+                    <?php if($errors->has('first_name') || $errors->has('last_name') || $errors->has('password_confirmation')): ?>
+                        if (authContainer && !authContainer.classList.contains("is-flipped")) {
+                            authContainer.classList.add("is-flipped");
+                        }
+                    <?php endif; ?>
+
+                 
+                    authModal.show();
+                }
+            });
+        </script>
+    <?php endif; ?>
+<?php endif; ?>
+    </body>
+
+</html><?php /**PATH C:\xampp\htdocs\Ritecs\resources\views\partials\endbody.blade.php ENDPATH**/ ?>

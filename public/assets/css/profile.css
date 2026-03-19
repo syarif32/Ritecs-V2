@@ -21,7 +21,6 @@
     color: var(--bs-white) !important;
     font-weight: bold;
     border-radius: 50px;
-    box-shadow: 0 0 7px 0px rgba(8, 8, 8, 0.3);
 }
 .dashboard .card {
     background-color: var(--bs-white);
@@ -50,10 +49,52 @@
     box-shadow: 3px 3px 9px 0px rgba(8, 8, 8, 0.1);
 }
 
+/* Wrapper untuk gambar membership */
+.membership-image-wrapper {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+/* Overlay di atas gambar */
+.membership-image-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.25);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.membership-image-wrapper:hover .membership-image-overlay {
+    opacity: 1;
+}
+
+/* Tombol dalam overlay */
+.membership-image-overlay a {
+    min-width: 150px;
+}
+
+
+/* Cards */
+.action-card:hover,
+.benefit-card:hover {
+  transform: translateY(-2px);
+  transition: .2s ease-in-out;
+  box-shadow: 0 .3rem 1rem rgba(0,0,0,.08) !important;
+}
+
+/* Round icon pill */
+.benefit-icon{
+  width: 48px; height: 48px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(13,110,253,.08); /* bootstrap primary 8% */
+}
 
 @media (min-width: 767px) {
     .container-main{
-        max-height: 90vh;
+        max-height: 85vh;
         overflow-y: auto;
         
         /* Firefox */

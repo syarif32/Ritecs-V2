@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Bank;
+
+class BankController extends Controller
+{
+    // INDEX
+    public function index()
+    {
+        $banks = Bank::orderBy('created_at','desc')->paginate(10);
+        return view('backend.pages.banks.index', compact('banks'), ['title' => 'Bank Data']);
+    }
+
+    // CREATE
+    public function create()
+    {
+        return view('backend.pages.banks.create', ['title' => 'Add Bank']);
+    }
+
+    // STORE
+    public function store(Request $request)
+    {
+        $request->validate([
+            'bank_name'      => 'required|string|max:255',
+            'account_name'   => 'required|string|max:255',
+            'account_number' => 'required|string|max:50',
+        ]);
+
+        Bank::create($request->all());
+
+        return redirect()->route('admin.banks.index')->with('success', 'Bank created successfully.');
+    }
+
+    // EDIT
+    public function edit($id)
+    {
+        $bank = Bank::findOrFail($id);
+        return view('backend.pages.banks.edit', compact('bank'), ['title' => 'Edit Bank']);
+    }
+
+    // UPDATE
+    public function update(Request $request, $id)
+    {
+        $bank = Bank::findOrFail($id);
+
+        $request->validate([
+            'bank_name'      => 'required|string|max:255',
+            'account_name'   => 'required|string|max:255',
+            'account_number' => 'required|string|max:50',
+        ]);
+
+        $bank->update($request->all());
+
+        return redirect()->route('admin.banks.index')->with('success', 'Bank updated successfully.');
+    }
+
+    // DELETE
+    public function destroy($id)
+    {
+        $bank = Bank::findOrFail($id);
+        $bank->delete();
+
+        return redirect()->route('admin.banks.index')->with('success', 'Bank deleted successfully.');
+    }
+}

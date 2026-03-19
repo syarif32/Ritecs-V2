@@ -19,75 +19,81 @@
 
 
         <!-- About Start -->
-        <div class="container-fluid bg-light about pb-5 mt-5">
-            <div class="container pb-5 mt-5" >
-                <div class="row g-5" id="visi-misi">
-                    <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s" >
-                        <div class="about-item-content bg-white rounded p-5 h-100">
-                            <h4 class="text-primary">Tentang Kami</h4>
-                            <h1 class="display-4 mb-4">VISI & MISI</h1>
-                            <H3>Visi
-                            </H3>
-                            <p>Menyediakan layanan terpercaya dan inklusif dalam mendukung dan berkontribusi nyata bagi
-                                pengembangan ilmu pengetahuan, budaya baca, dan daya imajinasi bangsa.</p>
-                            <H3>Misi
-                            </H3>
-                            <p class="text-dark"><i class="fa fa-check text-primary me-3"></i>Menerbitkan karya ilmiah dan kreatif dari berbagai latar belakang.</p>
-                            <p class="text-dark"><i class="fa fa-check text-primary me-3"></i>Mendukung literasi dan budaya baca melalui publikasi ilmiah dan non-ilmiah.</p>
-                            <p class="text-dark mb-4"><i class="fa fa-check text-primary me-3"></i>Menjaga kualitas dan etika dalam proses penerbitan.</p>
-                            <a class="btn btn-primary rounded-pill py-3 px-5" href="#">More Information</a>
-                        </div>
+        <div class="container-fluid bg-light about pb-5 pt-5">
+        <div class="container pb-5">
+            <div class="row g-5">
+                <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
+                   <div class="about-item-content bg-white rounded p-5 h-100">
+                        <h4 class="text-primary">Tentang Kami</h4>
+                        <h1 class="display-4 mb-4">VISI & MISI</h1>
+                        {!! $vision !!}
+                        {!! $mission !!}
+                        <a class="btn btn-primary rounded-pill py-3 px-5" href="{{ route('about') }}">More Information</a>
                     </div>
-                    <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s">
+                </div>
+                <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s">
                         <div class="bg-white rounded p-5 h-100">
                             <div class="row g-4 justify-content-center">
                                 <div class="col-12">
-                                    <div class="rounded bg-light">
-                                        <img src="assets/img/tim.png" class="img-fluid rounded w-100" alt="">
-                                    </div>
+
+                                <div class="rounded bg-light">
+
+                                    @php
+
+                                        $imageUrl = ($faq_image && Storage::disk('public')->exists($faq_image))
+                                            ? asset('storage/' . $faq_image)
+                                            : asset('assets/img/tim.png'); 
+                                    @endphp
+                                    <img src="{{ $imageUrl }}" class="img-fluid rounded w-100" alt="Tentang Kami">
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="counter-item bg-light rounded p-3 h-100">
-                                        <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">10</span>
-                                            <span class="h1 fw-bold text-primary">+</span>
-                                        </div>
-                                        <h4 class="mb-0 text-dark">Tenaga Ahli</h4>
+                            </div>
+                               <div class="col-sm-6">
+                                <div class="counter-item bg-light rounded p-3 h-100">
+                                    <div class="counter-counting">
+                                        <span class="text-primary fs-2 fw-bold"
+                                            data-toggle="counter-up">{{ $membershipCount }}</span>
+                                        <span class="h1 fw-bold text-primary">+</span>
                                     </div>
+                                    <h4 class="mb-0 text-dark">Membership</h4>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="counter-item bg-light rounded p-3 h-100">
-                                        <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">5</span>
-                                            <span class="h1 fw-bold text-primary">+</span>
-                                        </div>
-                                        <h4 class="mb-0 text-dark">Layanan</h4>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="counter-item bg-light rounded p-3 h-100">
+                                    <div class="counter-counting">
+                                        <span class="text-primary fs-2 fw-bold"
+                                            data-toggle="counter-up">{{ $bookCount }}</span>
+                                        <span class="h1 fw-bold text-primary">+</span>
                                     </div>
+                                    <h4 class="mb-0 text-dark">Buku</h4>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="counter-item bg-light rounded p-3 h-100">
-                                        <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">12</span>
-                                            <span class="h1 fw-bold text-primary">+</span>
-                                        </div>
-                                        <h4 class="mb-0 text-dark">Skilled Agents</h4>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="counter-item bg-light rounded p-3 h-100">
+                                    <div class="counter-counting">
+                                        <span class="text-primary fs-2 fw-bold"
+                                            data-toggle="counter-up">{{ $journalCount }}</span>
+                                        <span class="h1 fw-bold text-primary">+</span>
                                     </div>
+                                    <h4 class="mb-0 text-dark">Jurnal</h4>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="counter-item bg-light rounded p-3 h-100">
-                                        <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">15</span>
-                                            <span class="h1 fw-bold text-primary">+</span>
-                                        </div>
-                                        <h4 class="mb-0 text-dark">Team Members</h4>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="counter-item bg-light rounded p-3 h-100">
+                                    <div class="counter-counting">
+                                        <span class="text-primary fs-2 fw-bold"
+                                            data-toggle="counter-up">{{ $teamCount }}</span>
+                                        <span class="h1 fw-bold text-primary">+</span>
                                     </div>
+                                    <h4 class="mb-0 text-dark">Team Members</h4>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>
-                </div>
+             
             </div>
         </div>
+    </div>
         <!-- About End -->
 
 
@@ -122,7 +128,7 @@
                             <p class="mb-4"> Kami menyediakan layanan penerbitan jurnal ilmiah yang profesional, mulai dari proses penyuntingan, tata letak, hingga pendaftaran ISSN. 
     Tim kami siap membantu penulis dan peneliti dalam mempublikasikan hasil karya ilmiahnya agar dapat diakses secara luas dan diakui secara akademik.
                             </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="{{ route('ircs-journal') }}#ircs-journal">Learn More</a>
+                            <a class="btn btn-primary rounded-pill py-2 px-4" href="{{ route('layanan-journal') }}#layanan-jurnal">Learn More</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.6s">
@@ -137,6 +143,30 @@
                             <a class="btn btn-primary rounded-pill py-2 px-4 {{ ($title ?? '') === 'Membership' ? 'active' : '' }}" href="{{ route('membership') }}#petunjuk-penulis">Learn More</a>
                         </div>
                     </div>
+                    <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="feature-item h-100 p-4 pt-0">
+                            <div class="feature-icon p-4 mb-4">
+                                <i class="fas fa-chalkboard-teacher fa-3x"></i>
+                            </div>
+                            <h4 class="mb-4">Pusat Pelatihan</h4>
+                            <p class="mb-4">
+                                Tingkatkan keterampilan dan pengetahuan Anda melalui program pelatihan, workshop, dan seminar interaktif yang dirancang oleh instruktur berpengalaman.
+                            </p>
+                            <a class="btn btn-primary rounded-pill py-2 px-4 {{ ($title ?? '') === 'Membership' ? 'active' : '' }}" href="{{ route('training-center') }}#training">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.8s">
+                <div class="feature-item h-100 p-4 pt-0">
+                    <div class="feature-icon p-4 mb-4">
+                        <i class="fas fa-copyright fa-3x"></i>
+                    </div>
+                    <h4 class="mb-4">Layanan HAKI</h4>
+                    <p class="mb-4">
+                        Lindungi karya dan inovasi Anda. Kami menyediakan layanan pendampingan lengkap untuk pendaftaran Hak Atas Kekayaan Intelektual.
+                    </p>
+                    <a class="btn btn-primary rounded-pill py-2 px-4 {{ ($title ?? '') === 'Layanan HAKI' ? 'active' : '' }}" href="{{ route('layanan-haki') }}">Learn More</a>
+                </div>
+            </div>
                     <!-- <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.8s">
                         <div class="feature-item h-100 p-4 pt-0">
                             <div class="feature-icon p-4 mb-4">
@@ -181,72 +211,44 @@
         <!-- Feature End -->
 
         <!-- FAQs Start -->
-        <div class="container-fluid faq-section bg-light py-5">
-            <div class="container py-5">
-                <div class="row g-5 align-items-center">
-                    <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
-                        <div class="h-100">
-                            <div class="mb-5">
-                                <h4 class="text-primary">Some Important FAQ's</h4>
-                                <h1 class="display-5 mb-0">Pertanyaan umum tentang layanan dan penerbitan di RITECS.</h1>
-                            </div>
-                            <div class="accordion" id="accordionExample">
+         <div class="container-fluid faq-section bg-light py-5">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
+                    <div class="h-100">
+                        <div class="mb-5">
+                            <h4 class="text-primary">Some Important FAQ's</h4>
+                            <h1 class="display-5 mb-0">Pertanyaan umum tentang layanan dan penerbitan di RITECS.</h1>
+                        </div>
+                        <div class="accordion" id="accordionExample">
+                            @forelse($home_faqs as $faq)
                                 <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button border-0" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Q: Apa itu RITECS??
+                                    <h2 class="accordion-header" id="heading{{ $faq->id }}">
+                                        <button class="accordion-button border-0 {{ $loop->first ? '' : 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $faq->id }}" aria-expanded="{{ $loop->first ? 'true' : 'false' }}">
+                                            Q: {{ $faq->question }}
                                         </button>
                                     </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show active"
-                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body rounded">
-                                            A: RITECS adalah lembaga penerbitan yang menyediakan layanan penerbitan buku dan jurnal ilmiah. Kami berkomitmen untuk mendukung pengembangan ilmu pengetahuan dan budaya baca di Indonesia.
-                                        </div>
+                                    <div id="collapse{{ $faq->id }}" class="accordion-collapse collapse {{ $loop->first ? 'show' : '' }}" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body rounded">A: {{ $faq->answer }}</div>
                                     </div>
                                 </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingTwo">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Q: Apakah saya bisa menerbitkan buku sendiri di RITECS?
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            A: Ya, Anda bisa menerbitkan buku sendiri di RITECS. Kami menyediakan layanan penerbitan yang lengkap, mulai dari penyuntingan hingga penerbitan ber-ISBN.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingThree">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            Q: Berapa biaya untuk menerbitkan buku di RITECS?
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            A: Biaya penerbitan buku di RITECS bervariasi tergantung pada layanan yang Anda pilih. Kami menawarkan paket penerbitan yang fleksibel untuk memenuhi kebutuhan Anda.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @empty
+                                <p>Belum ada FAQ.</p>
+                            @endforelse
                         </div>
                     </div>
-                    <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.4s">
-                        <img src="assets/img/carousel-2.png" class="img-fluid w-100" alt="">
-                    </div>
+                </div>
+                <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.4s">
+                    <img src="{{ asset('storage/' . $faq_image) }}" class="img-fluid w-100" alt="">
                 </div>
             </div>
         </div>
+    </div>
         <!-- FAQs End -->
 
 
         <!-- Team Start -->
-        <div class="container-fluid team py-5">
+        <!-- <div class="container-fluid team py-5">
             <div class="container py-5">
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
                     <h4 class="text-primary">Our Team</h4>
@@ -325,6 +327,53 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+        <div class="container-fluid team pb-5 pt-5">
+    <div class="container pb-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            
+            <h4 class="text-primary">{{ $settings['team_pre_title'] ?? 'Our Team' }}</h4>
+            <h1 class="display-4 mb-4">{{ $settings['team_title'] ?? 'Meet Our Expert Team Members' }}</h1>
+            <p class="mb-0">
+                {{ $settings['team_description'] ?? 'Tim kami terdiri dari para profesional yang berdedikasi.' }}
+            </p>
         </div>
+
+        <div class="row g-4">
+            
+            @forelse ($teams as $team)
+                <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="{{ asset('storage/' . $team->img_path) }}" alt="{{ $team->name }}" class="img-fluid rounded-top w-100">
+                            <div class="team-icon">
+                                @if($team->facebook_url)
+                                    <a class="btn btn-primary btn-sm-square rounded-pill mb-2" href="{{ $team->facebook_url }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                @endif
+                                @if($team->twitter_url)
+                                    <a class="btn btn-primary btn-sm-square rounded-pill mb-2" href="{{ $team->twitter_url }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                                @endif
+                                @if($team->linkedin_url)
+                                    <a class="btn btn-primary btn-sm-square rounded-pill mb-2" href="{{ $team->linkedin_url }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                @endif
+                                @if($team->instagram_url)
+                                    <a class="btn btn-primary btn-sm-square rounded-pill mb-0" href="{{ $team->instagram_url }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="team-title p-4">
+                            <h4 class="mb-0">{{ $team->name }}</h4>
+                            <p class="mb-0">{{ $team->position }}</p>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="col-12 text-center">
+                    <p>Data tim belum tersedia saat ini.</p>
+                </div>
+            @endforelse
+        </div>
+    </div>
+</div>
         <!-- Team End -->
 @endsection

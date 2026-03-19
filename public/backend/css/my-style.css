@@ -1,0 +1,29 @@
+  
+
+  /* FORM UPLOAD */
+
+  span.select2.select2-container.select2-container--bootstrap4 {
+    width: 100% !important;
+}
+
+  .upload-box {
+    border: 2px dashed #ced4da;
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+    background-color: #f8f9fa;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .upload-box:hover {
+    background-color: #f1f3f5;
+  }
+  .upload-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+  .upload-placeholder {
+    padding: 20px;
+  }

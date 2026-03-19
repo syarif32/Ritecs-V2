@@ -104,7 +104,7 @@
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
                     <h4 class="text-primary">Layanan Kami</h4>
                     <h1 class="display-4 mb-4">Apa yang Kami Tawarkan</h1>
-                    <p class="mb-0">RITECS menyediakan berbagai layanan penerbitan buku dan jurnal ilmiah, mulai dari penyuntingan naskah, penerjemahan, hingga penerbitan ber-ISBN. Kami berkomitmen untuk mendukung penulis dan akademisi dalam mewujudkan karya mereka.
+                    <p class="mb-0">Kami menyediakan berbagai layanan penerbitan buku dan jurnal, mulai dari penyuntingan, tata letak, desain grafis, hingga penerbitan ber-ISBN. Tim kami siap membantu Anda mewujudkan karya ilmiah dan kreatif Anda.
                     </p>
                 </div>
 
@@ -115,7 +115,7 @@
                                 <i class="fas fa-book-open fa-3x"></i>
                             </div>
                             <h4 class="mb-4">Penerbitan Buku</h4>
-                            <p class="mb-4">Kami membantu menerbitkan buku ber-ISBN dengan kualitas profesional, dari penyuntingan hingga publikasi.
+                            <p class="mb-4">Kami menyediakan layanan penerbitan buku lengkap, mulai dari penyuntingan, tata letak, desain grafis, hingga penerbitan ber-ISBN
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4 {{ ($title ?? '') === 'Petunjuk Penulis' ? 'active' : '' }}" href="{{ route('petunjuk-penulis') }}#petunjuk-penulis">Learn More</a>
                         </div>
@@ -126,9 +126,10 @@
                                 <i class="fas fa-newspaper fa-3x"></i>
                             </div>
                             <h4 class="mb-4">Penerbitan Jurnal</h4>
-                            <p class="mb-4">Kami menyediakan layanan penerbitan jurnal ilmiah yang kredibel, mulai dari pendampingan proses editorial, pengelolaan peer-review, hingga distribusi digital yang menjangkau pembaca global.
+                            <p class="mb-4"> Kami menyediakan layanan penerbitan jurnal ilmiah yang profesional, mulai dari proses penyuntingan, tata letak, hingga pendaftaran ISSN. 
+    Tim kami siap membantu penulis dan peneliti dalam mempublikasikan hasil karya ilmiahnya agar dapat diakses secara luas dan diakui secara akademik.
                             </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4 {{ ($title ?? '') === 'Ircs Journal' ? 'active' : '' }}" href="{{ route('ircs-journal') }}#ircs-journal">Learn More</a>
+                            <a class="btn btn-primary rounded-pill py-2 px-4" href="{{ route('layanan-journal') }}#layanan-jurnal">Learn More</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.6s">
@@ -137,11 +138,36 @@
                                 <i class="fas fa-users fa-3x"></i>
                             </div>
                             <h4 class="mb-4">Membership</h4>
-                            <p class="mb-4">Bergabunglah dalam membership RITECS dan nikmati berbagai manfaat, mulai dari akses informasi terkini, dukungan publikasi, hingga peluang kolaborasi untuk pengembangan karya akademik dan profesional Anda.
+                            <p class="mb-4">
+                                Bergabunglah dengan komunitas kami untuk mendapatkan akses ke berbagai layanan dan sumber daya penerbitan. Dapatkan keuntungan eksklusif sebagai anggota.
                             </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4 {{ ($title ?? '') === 'Membership' ? 'active' : '' }}" href="{{ route('membership') }}#membership">Learn More</a>
+                            <a class="btn btn-primary rounded-pill py-2 px-4 {{ ($title ?? '') === 'Membership' ? 'active' : '' }}" href="{{ route('membership') }}">Learn More</a>
                         </div>
                     </div>
+                    <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="feature-item h-100 p-4 pt-0">
+                            <div class="feature-icon p-4 mb-4">
+                                <i class="fas fa-chalkboard-teacher fa-3x"></i>
+                            </div>
+                            <h4 class="mb-4">Pusat Pelatihan</h4>
+                            <p class="mb-4">
+                                Tingkatkan keterampilan dan pengetahuan Anda melalui program pelatihan, workshop, dan seminar interaktif yang dirancang oleh instruktur berpengalaman.
+                            </p>
+                            <a class="btn btn-primary rounded-pill py-2 px-4 {{ ($title ?? '') === 'Membership' ? 'active' : '' }}" href="{{ route('training-center') }}#training">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.8s">
+                <div class="feature-item h-100 p-4 pt-0">
+                    <div class="feature-icon p-4 mb-4">
+                        <i class="fas fa-copyright fa-3x"></i>
+                    </div>
+                    <h4 class="mb-4">Layanan HAKI</h4>
+                    <p class="mb-4">
+                        Lindungi karya dan inovasi Anda. Kami menyediakan layanan pendampingan lengkap untuk pendaftaran Hak Atas Kekayaan Intelektual.
+                    </p>
+                    <a class="btn btn-primary rounded-pill py-2 px-4 {{ ($title ?? '') === 'Layanan HAKI' ? 'active' : '' }}" href="{{ route('layanan-haki') }}">Learn More</a>
+                </div>
+            </div>
                     <!-- <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.8s">
                         <div class="feature-item h-100 p-4 pt-0">
                             <div class="feature-icon p-4 mb-4">
@@ -156,7 +182,7 @@
                     </div>
 
                     <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="1s">
-                        <div class="feature-item p-4 pt-0">
+                        <div class="feature-item h-100 p-4 pt-0">
                             <div class="feature-icon p-4 mb-4">
                                 <i class="fas fa-drafting-compass fa-3x"></i>
                             </div>
@@ -168,7 +194,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="1.2s">
-                        <div class="feature-item p-4 pt-0">
+                        <div class="feature-item h-100 p-4 pt-0">
                             <div class="feature-icon p-4 mb-4">
                                 <i class="fas fa-language fa-3x"></i>
                             </div>

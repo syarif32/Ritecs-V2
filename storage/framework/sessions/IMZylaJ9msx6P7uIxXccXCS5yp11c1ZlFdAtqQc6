@@ -1,0 +1,1 @@
+a:3:{s:6:"_token";s:40:"uU2E31HDiOhKlqNavvOmTu7FXAqgZRWuP4Oh6YGH";s:9:"_previous";a:2:{s:3:"url";s:129:"http://127.0.0.1:8000/otp/verify/36?expires=1767396834&signature=2ad473e03bc0c0a102449417a2e7c464ec16deeb68f318b9230467f5a567b602";s:5:"route";s:15:"otp.verify.show";}s:6:"_flash";a:2:{s:3:"old";a:0:{}s:3:"new";a:0:{}}}
