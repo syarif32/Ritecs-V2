@@ -1,8 +1,9 @@
+
+
 <?php $__env->startSection('content'); ?>
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-12">
-      
       <h2 class="page-title">Book Data</h2>
       <p class="card-text">DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool for advanced table features.</p>
       
@@ -15,36 +16,13 @@
           <div class="card shadow">
             <div class="card-body">
               
-              
-                <?php if(session('success')): ?>
-                  <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?php echo e(session('success')); ?>
+              <?php if(session('success')): ?>
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?php echo e(session('success')); ?>
 
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                  </div>
-                <?php endif; ?>
-
-                
-                <?php if(session('error')): ?>
-                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?php echo e(session('error')); ?>
-
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                  </div>
-                <?php endif; ?>
-
-                
-                <?php if($errors->any()): ?>
-                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <ul class="mb-0">
-                      <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li><?php echo e($error); ?></li>
-                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </ul>
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                  </div>
-                <?php endif; ?>
-
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+              </div>
+              <?php endif; ?>
 
               <table class="table datatables" id="dataTable-1">
                 <thead>
@@ -69,15 +47,20 @@
                     <td>
                       <a href="<?php echo e(asset($book->cover_path)); ?>" target="_blank">
                         <div class="avatar avatar-sm">
-                          <img src="<?php echo e(asset($book->cover_path)); ?>" class="avatar-img rounded cover"
-                          style="width:30px; height:30px; object-fit:cover;">
+                          <img src="<?php echo e(asset($book->cover_path)); ?>" class="avatar-img rounded object-fit-cover">
                         </div>
                       </a>
                     </td>
                     <td class="small"><?php echo e($book->title); ?></td>
                     <td class="small">
-                      <?php echo e($book->writers->pluck('name')->implode(', ')); ?>
+                     <?php if($book->writers->count() > 0): ?>
+                        <?php $__currentLoopData = $book->writers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $writer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <?php echo e($index + 1); ?>. <?php echo e($writer->name); ?><?php echo e(!$loop->last ? ', ' : ''); ?>
 
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                      <?php else: ?>
+                        <span class="text-muted">-</span>
+                      <?php endif; ?>
                     </td>
                     <td class="small">
                       <?php echo e($book->categories->pluck('name')->implode(', ')); ?>
@@ -93,7 +76,7 @@
                     <td class="small"><?php echo e($book->isbn); ?></td>
                     <td class="small">
                       <?php if($book->ebook_path): ?>
-                        <a href="<?php echo e($book->ebook_path); ?>" target="_blank"><?php echo e($book->ebook_path); ?></a>
+                        <a href="<?php echo e($book->ebook_path); ?>" target="_blank" class="text-truncate d-inline-block" style="max-width: 150px;"><?php echo e($book->ebook_path); ?></a>
                       <?php endif; ?>
                     </td>
                     <td class="small">
@@ -126,5 +109,4 @@
   </div>
 </div>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('backend.layouts.main', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\Ritecs\resources\views/backend/pages/published-books/books-data.blade.php ENDPATH**/ ?>

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles; 
 use App\Notifications\ResetPassword; 
+use Laravel\Sanctum\HasApiTokens;
 /**
  * @method bool hasRole(string|array $roles)
  * @method bool hasAnyRole(string|array $roles)
@@ -17,7 +18,7 @@ use App\Notifications\ResetPassword;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.

@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
     
-   <title><?php echo e($title ?? 'Error Title'); ?></title>
+    <title><?php echo e(ucfirst($title ?? 'Maintenance')); ?> - Ritecs Admin</title>
     <!-- Simple bar CSS -->
      
     <link rel="stylesheet" href="<?php echo e(asset('backend/css/my-style.css')); ?>">

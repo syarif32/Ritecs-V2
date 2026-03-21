@@ -1,3 +1,6 @@
+
+
+
 <?php $__env->startSection('content'); ?>
 <div class="d-flex justify-content-between w-100 flex-wrap-reverse">
     <span class="text-dark d-flex">
@@ -21,7 +24,7 @@
                 <?php echo csrf_field(); ?>
                 <?php echo method_field('PUT'); ?>
                 <input id="avatarInput" type="file" name="avatar" accept="image/*" class="d-none">
-                </form>
+            </form>
         </div>
 
         <div class="nama-profile ms-2">

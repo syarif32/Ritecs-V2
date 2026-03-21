@@ -17,19 +17,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
-
-       
-        if (Schema::hasTable('settings')) {
-            try {
-               
-                $global_settings = Setting::all()->pluck('value', 'key');
-                
-               
-                View::share('global_settings', $global_settings);
-
-            } catch (\Exception $e) {
-               
-                View::share('global_settings', []);
+        if (!app()->runningInConsole()) {
+            if (Schema::hasTable('settings')) {
+                try {
+                    $global_settings = Setting::all()->pluck('value', 'key');
+                    View::share('global_settings', $global_settings);
+                } catch (\Exception $e) {
+                    View::share('global_settings', []);
+                }
             }
         }
     }

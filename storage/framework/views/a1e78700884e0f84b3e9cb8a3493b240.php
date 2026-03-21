@@ -29,10 +29,10 @@
               </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item text-dark" href="#"><?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?></a>
-              <a class="dropdown-item" href="<?php echo e(route('profile.settings')); ?>">Profile</a>
-              <a class="dropdown-item" href="#">Name : <?php echo e(Auth::user()->email); ?></a>
-              <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="<?php echo e(route('profile.settings')); ?>">Profile</a>
+                <a class="dropdown-item text-dark" href="#">Name : <?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?></a>
+                <a class="dropdown-item" href="#">Role : <?php echo e(Auth::user()->getRoleNames()->first()); ?></a>
+                <a class="dropdown-item" href="#">
                 <form method="POST" action="<?php echo e(route('logout')); ?>" class="w-100">
                   <?php echo csrf_field(); ?>
                   <div class="btn-box w-100 p-0 m-0">

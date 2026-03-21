@@ -53,6 +53,7 @@
                     <th>Email</th>
                     <th>NIK</th>
                     <th>Period Start - End</th>
+                    <th>Type</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -105,12 +106,22 @@
 
 
                     <td>
+                      <?php if($m->user): ?>
+                        <span class="pt-1 badge text-dark fw-bold">User</span>
+                      <?php else: ?>
+                        <span class="pt-1 badge text-seccondary">Guest</span>
+                      <?php endif; ?>
+                    </td>
+
+
+                    <td>
                       <?php
                         $badge = $m->status == 1 ? 'success' : 'danger';
                         $label = $m->status == 1 ? 'Active' : 'Inactive';
                       ?>
                       <span class="pt-1 badge badge-<?php echo e($badge); ?>"><?php echo e($label); ?></span>
                     </td>
+                    
                     <td>
                       <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown">
                         <span class="text-muted sr-only">Action</span>

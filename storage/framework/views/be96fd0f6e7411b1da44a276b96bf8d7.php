@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
 <div class="container-fluid">
   <div class="row justify-content-center">
@@ -114,11 +116,6 @@
                                 onclick="return confirm('Perpanjang masa aktif membership ini selama 1 tahun?')">
                                 Perpanjang
                               </a>
-                          <?php else: ?>
-                          <a class="dropdown-item text-success" 
-                            href="<?php echo e(route('admin.memberships.edit', $tx->transaction_id)); ?>">
-                            Paid = Perpanjang
-                          </a>
                           <?php endif; ?>
 
                           <a class="dropdown-item text-danger" 

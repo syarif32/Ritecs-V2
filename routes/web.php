@@ -52,6 +52,13 @@ use App\Http\Controllers\Admin\UserManagement\UserManagementController;
 use App\Http\Controllers\Admin\Comment\CommentController;
 use App\Http\Controllers\Admin\ActivationRequest\ActivationRequestController;
 use App\Http\Controllers\MembershipCardController;
+// use App\Http\Controllers\Api\Auth\ApiAuthController;
+
+// Route::prefix('auth')->middleware('throttle:10,1')->group(function () {
+//     Route::post('/login', [ApiAuthController::class, 'login']);
+//     Route::post('/request-otp', [ApiAuthController::class, 'requestOtp']);
+//     Route::post('/verify-otp', [ApiAuthController::class, 'verifyOtp']);
+// });
 
 // auth google
 Route::get('/auth/google/redirect', [SocialiteController::class, 'redirectToGoogle'])->name('auth.google.redirect');

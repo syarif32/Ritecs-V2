@@ -36,9 +36,11 @@
                     <div class="col-xl-4 text-start position-relative membership-image-wrapper">
                         
                         
-                        <img id="membershipCard" src="<?php echo e(route('profile.membership.card.view', $membership->membership_id)); ?>" 
-                            alt="Membership Card" 
-                            class="img-fluid" style="max-height:400px;">
+                        <img id="membershipCard" 
+                             src="<?php echo e(route('profile.membership.card.view', $membership->membership_id)); ?>?v=<?php echo e(time()); ?>" 
+                             alt="Membership Card" 
+                             class="img-fluid" 
+                             style="max-height:400px;">
 
                         <div class="membership-image-overlay d-flex flex-column justify-content-center align-items-center text-center">
                             
@@ -48,9 +50,10 @@
                                 <i class="bi bi-eye me-1"></i> Lihat Kartu
                             </a>
 
-                            <button class="btn btn-primary btn-sm rounded-pill fw-normal px-3 mt-2" onclick="downloadCard()">
-                                <i class="bi bi-download me-1"></i> Unduh Kartu
-                            </button>
+                            <a href="<?php echo e(route('profile.membership.card.download', $membership->membership_id)); ?>" 
+                               class="btn btn-primary btn-sm rounded-pill fw-normal px-3 mt-2">
+                                <i class="bi bi-download me-1"></i> Unduh Kartu PDF
+                            </a>
                         </div>
                     </div>
 
@@ -343,7 +346,7 @@
                         <h5 class="modal-title h4 display-6 fw-bold" id="checkoutModalLabel">Upgrade Membership</h5>
                         <p>Upgrade ke membership untuk menikmati berbagai fitur dan potongan biaya publikasi hingga 15% pada seluruh layanan</p>
                     </div>            
-                    <form method="POST" action="<?php echo e(route('profile.member.submit')); ?>" enctype="multipart/form-data">
+                    <form method="POST" action="<?php echo e(route('profile.member.submit')); ?>" enctype="multipart/form-data" class="membership-transaction-form">
                         <?php echo csrf_field(); ?>
                         <div class="modal-body p-2">
 
@@ -442,21 +445,31 @@
                                         <?php endif; ?>
 
                                         <input type="file" 
-                                            class="form-control d-none" 
+                                            class="form-control d-none <?php $__errorArgs = ['ktp_path'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                                             id="ktpCheckout" name="ktp_path" accept="image/*" 
                                             onchange="previewKTP(this, 'ktpPreviewCheckout', 'ktpPlaceholderCheckout')">
                                     </div>
+
+                                    <div class="invalid-feedback ktp-error" >KTP wajib diunggah.</div>
 
                                     <?php $__errorArgs = ['ktp_path'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> 
-                                        <div class="invalid-feedback d-block"><?php echo e($message); ?></div> 
+$message = $__bag->first($__errorArgs[0]); ?>
+                                      <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
                                     <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+
 
                                     <?php if($user->ktp_path): ?>
                                     <a href="<?php echo e(route('profile.ktp.delete', ['modal' => 'checkoutModal'])); ?>" 
@@ -636,7 +649,7 @@ unset($__errorArgs, $__bag); ?>
                         <h5 class="modal-title h4 display-6 fw-bold" id="perpanjangMembershipModalLabel">Perpanjang Membership</h5>
                         
                     </div>       
-                    <form method="POST" action="<?php echo e(route('profile.member.submit')); ?>" enctype="multipart/form-data">
+                    <form method="POST" action="<?php echo e(route('profile.member.submit')); ?>" enctype="multipart/form-data" class="membership-transaction-form">
                         <?php echo csrf_field(); ?>
                         <div class="modal-body p-2">
 
@@ -735,21 +748,32 @@ unset($__errorArgs, $__bag); ?>
                                         <?php endif; ?>
 
                                         <input type="file" 
-                                            class="form-control d-none" 
+                                            class="form-control d-none <?php $__errorArgs = ['ktp_path'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                                             id="ktpExtend" name="ktp_path" accept="image/*" 
-                                            onchange="previewKTP(this, 'ktpPreviewExtend', 'ktpPlaceholderExtend')">
+                                            onchange="previewKTP(this, 'ktpPreviewExtend', 'ktpPlaceholderExtend')"
+                                        >
                                     </div>
 
+                                    <div class="invalid-feedback ktp-error" >KTP wajib diunggah.</div>
+                                
                                     <?php $__errorArgs = ['ktp_path'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> 
-                                    <div class="invalid-feedback d-block"><?php echo e($message); ?></div> 
+$message = $__bag->first($__errorArgs[0]); ?>
+                                      <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
                                     <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+
 
                                     <?php if($user->ktp_path): ?>
                                     <a href="<?php echo e(route('profile.ktp.delete', ['modal' => 'perpanjangMembershipModal'])); ?>" 
@@ -991,15 +1015,45 @@ unset($__errorArgs, $__bag); ?>
     </script>
 
 
-        <?php if(session('openModal')): ?>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var modalId = "<?php echo e(session('openModal')); ?>";
-                var myModal = new bootstrap.Modal(document.getElementById(modalId));
-                myModal.show();
+    <?php if(session('openModal')): ?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modalId = "<?php echo e(session('openModal')); ?>";
+            var myModal = new bootstrap.Modal(document.getElementById(modalId));
+            myModal.show();
+        });
+    </script>
+    <?php endif; ?>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // cek apakah user sudah punya KTP di server
+        const userHasKTP = Boolean(<?php echo json_encode(!empty($user->ktp_path), 15, 512) ?>);
+    
+        console.log("DEBUG userHasKTP =", userHasKTP); // 👀 cek di console
+    
+        // cari semua form membership
+        document.querySelectorAll(".membership-transaction-form").forEach(function(form, index) {
+            const fileInput = form.querySelector('input[name="ktp_path"]');
+            console.log("DEBUG Form", index, "fileInput found?", !!fileInput);
+    
+            form.addEventListener("submit", function(e) {
+                console.log("DEBUG submit form index", index);
+    
+                if (!userHasKTP && (!fileInput || fileInput.files.length === 0)) {
+                    e.preventDefault();
+                    console.log("DEBUG kondisi terpenuhi: blokir submit karena KTP kosong");
+                    alert("⚠️ KTP wajib diunggah sebelum melanjutkan!");
+                    if (fileInput) fileInput.focus();
+                    return false;
+                }
             });
-        </script>
-        <?php endif; ?>
+        });
+    });
+    </script>
+
+
+
 
 
 

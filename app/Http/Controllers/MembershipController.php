@@ -124,7 +124,93 @@ class MembershipController extends Controller
         return redirect()->route('profile.member')
             ->with('success','Transaksi berhasil dikirim. Menunggu verifikasi admin.');
     }
+    public function submitTransactionApi(Request $request)
+    {
+        try {
+            /** @var \App\Models\User $user */
+            $user = Auth::user();
 
+            $request->validate([
+                'first_name'  => 'required|string|max:100',
+                'last_name'   => 'nullable|string|max:100',
+                'email'       => 'required|email|max:150|unique:users,email,' . $user->user_id . ',user_id',
+                'nik'         => 'nullable|string|max:50',
+                'birthday'    => 'nullable|date',
+                'phone'       => 'nullable|string|max:50',
+                'address'     => 'nullable|string',
+                'city'        => 'nullable|string|max:255',
+                'province'    => 'nullable|string|max:255',
+                'institution' => 'nullable|string|max:255',
+                'ktp_path'    => $user->ktp_path ? 'nullable|image|max:2048' : 'required|image|max:2048',
+                'sender_name' => 'required|string|max:150',
+                'sender_bank' => 'required|string|max:100',
+                'bank_id'     => 'required|exists:banks,bank_id',
+                'amount'      => 'required|numeric',
+                'proof'       => 'required|image|max:3072',
+                'type'        => 'required|in:firstPayments,extendedPayments',
+            ]);
+
+            $user->first_name  = $request->first_name;
+            $user->last_name   = $request->last_name;
+            $user->email       = $request->email;
+            $user->nik         = $request->nik;
+            $user->birthday    = $request->birthday;
+            $user->phone       = $request->phone;
+            $user->address     = $request->address ?? '';
+            $user->city        = $request->city ?? '';
+            $user->province    = $request->province ?? '';
+            $user->institution = $request->institution ?? '';
+
+            if ($request->hasFile('ktp_path')) {
+                $filename = time().'_ktp_'.$request->file('ktp_path')->getClientOriginalName();
+                $destination = public_path('assets/users/identity'); 
+                if (!file_exists($destination)) mkdir($destination, 0755, true);
+                if ($user->ktp_path && file_exists(public_path($user->ktp_path))) {
+                    @unlink(public_path($user->ktp_path));
+                }
+                $request->file('ktp_path')->move($destination, $filename);
+                $user->ktp_path = 'assets/users/identity/'.$filename;
+            }
+
+            $user->save();
+
+            $filenameProof = time().'_proof_'.$request->file('proof')->getClientOriginalName();
+            $destinationProof = public_path('assets/memberships/proofs');
+            if (!file_exists($destinationProof)) mkdir($destinationProof, 0755, true);
+            $request->file('proof')->move($destinationProof, $filenameProof);
+            $proofPath = 'assets/memberships/proofs/'.$filenameProof;
+
+            \App\Models\Transaction::create([
+                'user_id'     => $user->user_id,
+                'amount'      => $request->amount,
+                'status'      => 'pending',
+                'proof_path'  => $proofPath,
+                'sender_name' => $request->sender_name,
+                'sender_bank' => $request->sender_bank,
+                'bank_id'     => $request->bank_id,
+                'type'        => $request->type,
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Pendaftaran berhasil dikirim! Menunggu verifikasi admin.'
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data tidak valid: ' . collect($e->errors())->flatten()->first()
+            ], 422);
+        } catch (\Exception $e) {
+            \Log::error('API Submit Transaction Error: ' . $e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Server Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
     /**
      * Generate & Return PNG Preview (untuk <img> tag di profile)
      */

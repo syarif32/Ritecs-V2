@@ -12,11 +12,11 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav mx-0 mx-lg-auto justify-content-center">
                     <a href="<?php echo e(route('home')); ?>" class="nav-item nav-link <?php echo e(($title ?? '') === 'Home' ? 'active' : ''); ?>">Beranda</a>
-                    <a href="<?php echo e(route('about')); ?>#visi-misi" class="nav-item nav-link <?php echo e(($title ?? '') === 'About' ? 'active' : ''); ?>">Tentang</a>
-                    <a href="<?php echo e(route('service')); ?>" class="nav-item nav-link <?php echo e(($title ?? '') === 'Service' ? 'active' : ''); ?>">Layanan</a>
+                    <a href="<?php echo e(route('about')); ?>#visi-misi" class="nav-item nav-link <?php echo e(($title ?? '') === 'About Us' ? 'active' : ''); ?>">Tentang</a>
+                    <a href="<?php echo e(route('service')); ?>" class="nav-item nav-link <?php echo e(in_array($title ?? '', ['Membership', 'service']) ? 'active' : ''); ?>">Layanan</a>
                     
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-item nav-link <?php echo e(in_array($title ?? '', ['Buku', 'Jurnal', 'Detail Buku', 'Awardings']) ? 'active' : ''); ?>" data-bs-toggle="dropdown">
+                        <a href="#" class="nav-item nav-link <?php echo e(in_array($title ?? '', ['Buku', 'Jurnal', 'Detail Buku', 'Awardings', 'Members']) ? 'active' : ''); ?>" data-bs-toggle="dropdown">
                             <span class="dropdown-toggle">Publish</span>
                         </a>
                         <div class="dropdown-menu">
@@ -28,14 +28,14 @@
                     </div>
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-item nav-link <?php echo e(in_array($title ?? '', ['Petunjuk Penulis', 'Layanan Journal', 'Contact']) ? 'active' : ''); ?>" data-bs-toggle="dropdown">
+                        <a href="#" class="nav-item nav-link <?php echo e(in_array($title ?? '', ['Petunjuk Penulis', 'Layanan Jurnal', 'Contact', 'Layanan HAKI', 'Pusat Pelatihan', '']) ? 'active' : ''); ?>" data-bs-toggle="dropdown">
                             <span class="dropdown-toggle">Bantuan</span>
                         </a>
                         <div class="dropdown-menu">
                             <a href="<?php echo e(route('petunjuk-penulis')); ?>#petunjuk-penulis" class="dropdown-item <?php echo e(($title ?? '') === 'Petunjuk Penulis' ? 'active' : ''); ?>">Petunjuk Penulis</a>
-                            <a href="<?php echo e(route('layanan-journal')); ?>#layanan-jurnal" class="dropdown-item <?php echo e(in_array($title ?? '', ['Service', 'Layanan Journal']) ? 'active' : ''); ?>">Layanan Jurnal</a>
-                            <a href="<?php echo e(route('training-center')); ?>#training" class="dropdown-item <?php echo e(($title ?? '') === 'Training Center' ? 'active' : ''); ?>">Pusat Pelatihan</a>
-                            <a href="<?php echo e(route('layanan-haki')); ?>" class="dropdown-item">Layanan HAKI</a>
+                            <a href="<?php echo e(route('layanan-journal')); ?>#layanan-jurnal" class="dropdown-item <?php echo e(in_array($title ?? '', ['Service', 'Layanan Jurnal']) ? 'active' : ''); ?>">Layanan Jurnal</a>
+                            <a href="<?php echo e(route('training-center')); ?>#training" class="dropdown-item <?php echo e(($title ?? '') === 'Pusat Pelatihan' ? 'active' : ''); ?>">Pusat Pelatihan</a>
+                            <a href="<?php echo e(route('layanan-haki')); ?>" class="dropdown-item <?php echo e(($title ?? '') === 'Layanan HAKI' ? 'active' : ''); ?>">Layanan HAKI</a>
                             <a href="<?php echo e(route('contact.create')); ?>#contact" class="dropdown-item <?php echo e(($title ?? '') === 'Contact' ? 'active' : ''); ?>">Kontak</a>
                         </div>
                     </div>
@@ -78,12 +78,13 @@
                         <span><i class="fa fa-comment-dots text-secondary"></i></span>
                     </div>
                 </a>
-                <div class="d-flex flex-column ms-3">
-                    <span>Call to Our Experts</span>
-                    <a href="tel:<?php echo e($global_contact_phone?->value ?? ''); ?>">
-                        <span class="text-dark">Free: <?php echo e($global_contact_phone?->value ?? 'Nomor belum diatur'); ?></span>
-                    </a>
-                </div>
+               <div class="d-flex flex-column ms-3">
+    <span>Call to Our Experts</span>
+  
+    <a href="tel:<?php echo e($global_settings['contact_phone'] ?? ''); ?>">
+        <span class="text-dark">Free: <?php echo e($global_settings['contact_phone'] ?? 'Nomor belum diatur'); ?></span>
+    </a>
+</div>
             </div>
         </nav>
     </div>

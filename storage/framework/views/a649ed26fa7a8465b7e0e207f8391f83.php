@@ -70,7 +70,7 @@
        
         $currentRoute = request()->route() ? request()->route()->getName() : '';
         
-        // PERBAIKAN: Tambahkan 'home' ke blacklist agar modal tidak muncul di Beranda
+        
         $blacklistedRoutes = [
             'password.request', 
             'password.reset',  

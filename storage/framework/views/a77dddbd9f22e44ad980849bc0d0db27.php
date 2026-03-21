@@ -44,6 +44,7 @@
                 </p>
             </td>
         </tr>
+
         <tr>
             <td style="padding: 30px 40px; text-align: center; background-color: #fafafa; border-top: 1px solid #e9ecef; border-radius: 0 0 8px 8px;">
                 <p class="fallback-font" style="font-size: 12px; color: #888888; margin: 0;">
@@ -55,5 +56,6 @@
             </td>
         </tr>
     </table>
+
 </body>
 </html><?php /**PATH C:\xampp\htdocs\Ritecs\resources\views/pages/emails/otp.blade.php ENDPATH**/ ?>

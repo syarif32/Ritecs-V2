@@ -11,7 +11,7 @@
     </div>
 
 
-    <p class="text-muted nav-heading mt-4 mb-1">
+    <p class="text-muted nav-heading mt-2 mb-1">
       <span>Web Performance</span>
     </p>
 
@@ -34,21 +34,52 @@
 
       </li>
 
-      <li class="nav-item <?php echo e(($title ?? '') === 'Data Traffic' ? 'active' : ''); ?>">
-        <a class="nav-link disabled" href="<?php echo e(route('admin.dashboard')); ?>" aria-disabled="true">
-          <i class="fe fe-activity fe-16"></i>
-          <span class="ml-3 item-text">Data Traffic</span>
-        </a>
-      </li>
-      <li class="nav-item <?php echo e(($title ?? '') === 'Analytics' ? 'active' : ''); ?>">
-        <a class="nav-link disabled" href="<?php echo e(route('admin.dashboard')); ?>" aria-disabled="true">
-          <i class="fe fe-pie-chart fe-16"></i>
-          <span class="ml-3 item-text">Analytics</span>
-        </a>
-      </li>
     </ul>
+    <p class="text-muted nav-heading mt-2 mb-1">
+  <span>Access Manager</span>
+</p>
+<ul class="navbar-nav flex-fill w-100 mb-2">
+ <li class="nav-item <?php echo e(in_array($title ?? '', ['Role Management', 'History Log']) ? 'active' : ''); ?> dropdown">
+        <a href="#accessManager" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle nav-link">
+          <i class="fe fe-shield fe-16"></i> 
+          <span class="ml-3 item-text">Admin & Access</span>
+        </a>
 
-    <p class="text-muted nav-heading mt-4 mb-1">
+        <ul class="collapse list-unstyled pl-4 w-100 <?php echo e(in_array($title ?? '', ['Role Management', 'History Log']) ? 'show' : ''); ?>"
+          id="accessManager">
+          
+          
+          <li class="nav-item">
+            <a class="nav-link <?php echo e(($title ?? '') === 'Role Management' ? 'active' : ''); ?> pl-3"
+              href="<?php echo e(route('admin.usersmanagement.index')); ?>">
+              <span class="ml-1 item-text">Manage Roles</span>
+            </a>
+          </li>
+
+         
+          <li class="nav-item">
+            <a class="nav-link <?php echo e(($title ?? '') === 'History Log' ? 'active' : ''); ?> pl-3"
+              href="<?php echo e(route('admin.users.history')); ?>">
+              <span class="ml-1 item-text">History Log</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      
+        
+      <li class="nav-item <?php echo e((request()->is('admin/activation-requests*')) ? 'active' : ''); ?>">
+        <a class="nav-link" href="<?php echo e(route('admin.activation.index')); ?>">
+          <i class="fe fe-user-check fe-16"></i>
+          <span class="ml-3 item-text">Request Aktivasi</span>
+          
+          
+          
+        </a>
+      </li>
+
+</ul>
+
+    <p class="text-muted nav-heading mt-2 mb-1">
       <span>Financial Manager</span>
     </p>
 
@@ -82,29 +113,22 @@
         </a>
       </li>
 
-      <li class="nav-item d-none <?php echo e(($title ?? '') === 'Refunds' ? 'active' : ''); ?>">
-        <a class="nav-link disabled" href="#" aria-disabled="true">
-          <i class="fe fe-refresh-ccw fe-16"></i>
-          <span class="ml-3 item-text">Refunds</span>
-        </a>
-      </li>
-
     </ul>
 
 
-    <p class="text-muted nav-heading mt-4 mb-1">
-      <span>Web Data Manager</span>
+    <p class="text-muted nav-heading mt-2 mb-1">
+      <span>User Manager</span>
     </p>
 
-    <ul class="navbar-nav flex-fill w-100 mb-2">
-      <li class="nav-item <?php echo e(in_array($title ?? '', ['Users Data', 'Edit User', 'Add User', 'NonActive Users Data', 'User Membership Data', 'Add User Membership', 'Edit User Membership']) ? 'active' : ''); ?> dropdown">
+    <ul class="navbar-nav flex-fill w-100  mb-2">
+      <li class="nav-item <?php echo e(in_array($title ?? '', ['Users Data', 'Edit User', 'Add User', 'NonActive Users Data']) ? 'active' : ''); ?> dropdown">
         <a href="#usersData" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle nav-link">
           <i class="fe fe-users fe-16"></i>
           <span class="ml-3 item-text">Users Data</span>
         </a>
 
         <!-- properti "show" untuk open dropdown -->
-        <ul class="collapse list-unstyled pl-4 w-100 <?php echo e(in_array($title ?? '', ['Users Data', 'Edit User', 'Add User', 'NonActive Users Data', 'User Membership Data', 'Add User Membership', 'Edit User Membership']) ? 'show' : ''); ?>"
+        <ul class="collapse list-unstyled pl-4 w-100 <?php echo e(in_array($title ?? '', ['Users Data', 'Edit User', 'Add User', 'NonActive Users Data']) ? 'show' : ''); ?>"
           id="usersData">
           <li class="nav-item">
             <a class="nav-link <?php echo e(($title ?? '') === 'Users Data' ? 'active' : ''); ?> pl-3"
@@ -114,42 +138,41 @@
             <a class="nav-link <?php echo e(($title ?? '') === 'NonActive Users Data' ? 'active' : ''); ?> pl-3"
               href="<?php echo e(route('admin.users.nonactiveusers')); ?>"><span class="ml-1 item-text">Nonactive</span></a>
           </li>
+        </ul>
+
+      </li>
+      
+    </ul>
+    
+    <p class="text-muted nav-heading mt-2 mb-1">
+      <span>Membership Manager</span>
+    </p>
+    
+    <ul class="navbar-nav flex-fill w-100 mb-2">
+      <li class="nav-item <?php echo e(in_array($title ?? '', ['User Membership Data', 'Add User Membership', 'Edit User Membership', 'Membership Card Settings']) ? 'active' : ''); ?> dropdown">
+        <a href="#memberhipsData" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle nav-link">
+          <i class="fe fe-users fe-16"></i>
+          <span class="ml-3 item-text">Membership Data</span>
+        </a>
+
+        <!-- properti "show" untuk open dropdown -->
+        <ul class="collapse list-unstyled pl-4 w-100 <?php echo e(in_array($title ?? '', ['User Membership Data', 'Add User Membership', 'Edit User Membership', 'Membership Card Settings']) ? 'show' : ''); ?>"
+          id="memberhipsData">
           <li class="nav-item">
             <a class="nav-link <?php echo e(in_array($title ?? '', ['User Membership Data', 'Add User Membership', 'Edit User Membership']) ? 'active' : ''); ?> pl-3"
               href="<?php echo e(route('admin.manageUserMemberships.index')); ?>"><span class="ml-1 item-text">Membership</span></a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link <?php echo e(in_array($title ?? '', ['Membership Card Settings']) ? 'active' : ''); ?> pl-3"
+              href="<?php echo e(route('admin.membership-card-settings')); ?>"><span class="ml-1 item-text">Card Settings</span></a>
+          </li>
           
         </ul>
 
       </li>
-      <li class="nav-item <?php echo e(in_array($title ?? '', ['Role Management', 'History Log']) ? 'active' : ''); ?> dropdown">
-        <a href="#accessManager" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle nav-link">
-          <i class="fe fe-shield fe-16"></i> 
-          <span class="ml-3 item-text">Admin & Access</span>
-        </a>
-
-        <ul class="collapse list-unstyled pl-4 w-100 <?php echo e(in_array($title ?? '', ['Role Management', 'History Log']) ? 'show' : ''); ?>"
-          id="accessManager">
-          
-          
-          <li class="nav-item">
-            <a class="nav-link <?php echo e(($title ?? '') === 'Role Management' ? 'active' : ''); ?> pl-3"
-              href="<?php echo e(route('admin.usersmanagement.index')); ?>">
-              <span class="ml-1 item-text">Manage Roles</span>
-            </a>
-          </li>
-
-         
-          <li class="nav-item">
-            <a class="nav-link <?php echo e(($title ?? '') === 'History Log' ? 'active' : ''); ?> pl-3"
-              href="<?php echo e(route('admin.users.history')); ?>">
-              <span class="ml-1 item-text">History Log</span>
-            </a>
-          </li>
-        </ul>
-      </li>
+      
     </ul>
-
+    
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li
         class="nav-item <?php echo e(in_array($title ?? '', ['Journal Data', 'Add Journal', 'Edit Journal', 'Book Data', 'Edit Book', 'Add Book']) ? 'active' : ''); ?> dropdown">
@@ -158,7 +181,7 @@
           <span class="ml-3 item-text">Published</span>
         </a>
 
-        
+        <!-- properti "show" untuk open dropdown -->
         <ul
           class="collapse list-unstyled pl-4 w-100 <?php echo e(in_array($title ?? '', ['Journal Data', 'Add Journal', 'Edit Journal', 'Book Data', 'Edit Book', 'Add Book', 'Awarding Data', 'Add Awarding', 'Edit Awarding']) ? 'show' : ''); ?>"
           id="publish">
@@ -176,10 +199,7 @@
           </li>
           <li class="nav-item w-100">
     <a class="nav-link <?php echo e(Request::routeIs('admin.content-history') ? 'active' : ''); ?>" 
-       href="<?php echo e(route('admin.content-history')); ?>">
-       
-        <i class="fe fe-activity fe-16"></i>
-        <span class="ml-3 item-text">Riwayat Upload</span>
+       href="<?php echo e(route('admin.content-history')); ?>"><span class="ml-3 item-text">Riwayat Upload</span>
     </a>
 </li>
         </ul>
@@ -194,7 +214,6 @@
           <i class="fe fe-git-pull-request fe-16"></i>
           <span class="ml-3 item-text">Publish Utils</span>
         </a>
-
         <!-- properti "show" untuk open dropdown -->
         <ul
           class="collapse list-unstyled pl-4 w-100 <?php echo e(in_array($title ?? '', ['Keywords', 'Add Keywords', 'Edit Keywords', 'Categories', 'Add Category', 'Edit Category', 'Writers', 'Add Writer', 'Edit Writer']) ? 'show' : ''); ?>"
@@ -215,7 +234,8 @@
 
       </li>
     </ul>
-    <p class="text-muted nav-heading mt-4 mb-1">
+    
+<p class="text-muted nav-heading mt-4 mb-1">
   <span>Comment Manager</span>
 </p>
 <ul class="navbar-nav flex-fill w-100 mb-2">
@@ -226,25 +246,10 @@
         </a>
       </li>
 </ul>
-<p class="text-muted nav-heading mt-4 mb-1">
-  <span>Aktivasi User</span>
-</p>
-<ul class="navbar-nav flex-fill w-100 mb-2">
-  
-  <li class="nav-item <?php echo e((request()->is('admin/activation-requests*')) ? 'active' : ''); ?>">
-    <a class="nav-link" href="<?php echo e(route('admin.activation.index')); ?>">
-      <i class="fe fe-user-check fe-16"></i>
-      <span class="ml-3 item-text">Request Aktivasi</span>
-      
-      
-      
-    </a>
-  </li>
-</ul>
     <p class="text-muted nav-heading mt-4 mb-1">
       <span>Frontend Manager</span>
     </p>
-
+    
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item <?php echo e((request()->is('admin/page/home*')) ? 'active' : ''); ?>">
         <a class="nav-link" href="<?php echo e(route('admin.page.home.index')); ?>">
@@ -276,12 +281,6 @@
           <span class="ml-3 item-text">Membership</span>
         </a>
       </li>
-      <li class="nav-item <?php echo e((request()->is('admin/page/contact*')) ? 'active' : ''); ?>">
-        <a class="nav-link" href="<?php echo e(route('admin.page.contact.index')); ?>">
-          <i class="fe fe-mail fe-16"></i>
-          <span class="ml-3 item-text">Contact</span>
-        </a>
-      </li>
       <li class="nav-item <?php echo e((request()->is('admin/page/training*')) ? 'active' : ''); ?>">
         <a class="nav-link" href="<?php echo e(route('admin.page.training.index')); ?>">
           <i class="fe fe-briefcase fe-16"></i>
@@ -300,6 +299,12 @@
             <span class="ml-3 item-text">Kelola Tim</span>
         </a>
     </li>
+        <li class="nav-item <?php echo e((request()->is('admin/page/contact*')) ? 'active' : ''); ?>">
+        <a class="nav-link" href="<?php echo e(route('admin.page.contact.index')); ?>">
+          <i class="fe fe-mail fe-16"></i>
+          <span class="ml-3 item-text">Contact</span>
+        </a>
+      </li>
       <li class="nav-item <?php echo e((request()->is('admin/page/footer*')) ? 'active' : ''); ?>">
         <a class="nav-link" href="<?php echo e(route('admin.page.footer.index')); ?>">
           <i class="fe fe-chevrons-down fe-16"></i>
@@ -307,7 +312,7 @@
         </a>
       </li>
     </ul>
-  <p class="text-muted nav-heading mt-4 mb-1">
+    <p class="text-muted nav-heading mt-4 mb-1">
   <span>System Tools Maintenance</span>
 </p>
 
@@ -319,7 +324,6 @@
     </a>
   </li>
 </ul>
-
     <form method="POST" action="<?php echo e(route('logout')); ?>" class="w-100">
       <?php echo csrf_field(); ?>
       <div class="btn-box w-100 mt-4 mb-1">

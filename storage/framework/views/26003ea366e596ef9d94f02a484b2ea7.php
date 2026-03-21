@@ -1,279 +1,379 @@
 <?php $__env->startSection('content'); ?>
-
-  <div class="container-fluid">
+<div class="container-fluid">
     <div class="row justify-content-center">
-      <div class="col-12">
-
-        <div class="row align-items-center mb-4">
-          <div class="col">
-            <h2 class="h5 page-title">Dashboard Overview</h2>
-            <p class="text-muted mb-0">Ringkasan aktivitas sistem dan transaksi terkini.</p>
-          </div>
-          <div class="col-auto">
-            <form class="form-inline">
-              <div class="form-group d-none d-lg-inline">
-                <label for="reportrange" class="sr-only">Date Ranges</label>
-                <div id="reportrange" class="px-2 py-2 text-muted bg-light rounded border">
-                  <span class="small"><i class="fe fe-calendar mr-2"></i> <?php echo e(date('d M Y')); ?></span>
+        <div class="col-12">
+            <div class="row align-items-center mb-2">
+                <div class="col">
+                    <h2 class="h5 page-title">Welcome!</h2>
                 </div>
-              </div>
-              <div class="form-group ml-3">
-                <button type="button" class="btn btn-sm btn-light border mr-2"><span
-                    class="fe fe-refresh-ccw fe-16 text-muted"></span></button>
-                <button type="button" class="btn btn-sm btn-light border"><span
-                    class="fe fe-filter fe-16 text-muted"></span></button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div class="row mb-4">
-          <div class="col-12">
-            <div class="card shadow mb-4">
-              <div class="card-body">
-                <div class="row align-items-center mb-4">
-
-                  <div class="col-md-4 col-12 border-right">
-                    <p class="mb-1 small text-muted text-uppercase font-weight-bold">Total Pendapatan</p>
-                    <span class="h3 mb-0 text-primary">Rp <?php echo e(number_format($totalRevenue, 0, ',', '.')); ?></span>
-                    <div class="mt-2">
-                      <span class="badge badge-light text-success px-2 py-1">+20% <i class="fe fe-arrow-up"></i></span>
-                      <small class="text-muted ml-1">dari bulan lalu</small>
-                    </div>
-                  </div>
-
-                  <div class="col-md-8 col-12">
-                    <div class="row text-center">
-                      <div class="col-4">
-                        <p class="mb-1 small text-muted">Perlu Validasi</p>
-                        <h4 class="mb-0"><?php echo e($pendingTransactions); ?></h4>
-                        <?php if($pendingTransactions > 0): ?>
-                          <small class="text-danger font-weight-bold">Action Needed</small>
-                        <?php else: ?>
-                          <small class="text-success"><i class="fe fe-check-circle"></i> Aman</small>
-                        <?php endif; ?>
-                      </div>
-                      <div class="col-4 border-left border-right">
-                        <p class="mb-1 small text-muted">Member Aktif</p>
-                        <h4 class="mb-0"><?php echo e($activeMembers); ?></h4>
-                        <small class="text-muted">User Terdaftar</small>
-                      </div>
-                      <div class="col-4">
-                        <p class="mb-1 small text-muted">Total Downloads</p>
-                        <h4 class="mb-0"><?php echo e($totalDownloads); ?></h4>
-                        <small class="text-muted">Buku</small>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <h6 class="card-title text-muted mb-3">Analitik 7 Hari Terakhir</h6>
-                <div class="chartbox position-relative" style="min-height: 320px;">
-                  <div id="myRealChart"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-
-          <div class="col-md-12 col-lg-4 mb-4">
-            <div class="card shadow h-100">
-              <div class="card-header d-flex justify-content-between align-items-center">
-                <strong class="card-title mb-0">Aktivitas Admin</strong>
-                <a class="small text-muted" href="#">Lihat Semua</a>
-              </div>
-              <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-                <div class="timeline">
-                  <?php $__empty_1 = true; $__currentLoopData = $adminLogs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $log): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                    <div class="pb-3 timeline-item item-<?php echo e($loop->iteration % 2 == 0 ? 'warning' : 'primary'); ?>">
-                      <div class="pl-4">
-                        <div class="mb-1 small">
-                          <strong><?php echo e($log->actor->full_name ?? 'System'); ?></strong>
-                          <span class="text-muted mx-1"><?php echo e($log->action ?? 'melakukan aksi'); ?></span>
+                <div class="col-auto">
+                    <form class="form-inline">
+                        <div class="form-group d-none d-lg-inline">
+                            <label for="reportrange" class="sr-only">Date Ranges</label>
+                            <div id="reportrange" class="px-2 py-2 text-muted">
+                                <span class="small"></span>
+                            </div>
                         </div>
-                        <p class="small text-muted mb-1 font-italic">"<?php echo e(Str::limit($log->description, 50)); ?>"</p>
-                        <span class="badge badge-light text-muted"><?php echo e($log->created_at->diffForHumans()); ?></span>
-                      </div>
-                    </div>
-                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                    <div class="text-center text-muted py-4">
-                      <span class="fe fe-inbox fe-24 mb-2 d-block"></span>
-                      Belum ada aktivitas tercatat.
-                    </div>
-                  <?php endif; ?>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-sm"><span class="fe fe-refresh-ccw fe-16 text-muted"></span></button>
+                            <button type="button" class="btn btn-sm mr-2"><span class="fe fe-filter fe-16 text-muted"></span></button>
+                        </div>
+                    </form>
                 </div>
-              </div>
             </div>
-          </div>
 
-          <div class="col-md-12 col-lg-8 mb-4">
-            <div class="card shadow h-100">
-              <div class="card-header d-flex justify-content-between align-items-center">
-                <strong class="card-title mb-0">Transaksi Terakhir</strong>
-                <a class="small text-muted" href="#">Lihat Semua</a>
-              </div>
-              <div class="card-body p-0">
-                <div class="table-responsive">
-                  <table class="table table-striped table-hover table-borderless mb-0">
-                    <thead class="thead-light">
-                      <tr>
-                        <th>ID</th>
-                        <th>User</th>
-                        <th>Nominal</th>
-                        <th>Tanggal</th>
-                        <th>Status</th>
-                        <th class="text-right">Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php $__empty_1 = true; $__currentLoopData = $recentTransactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $trx): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                        <tr>
-                          <td class="align-middle"><small class="text-muted">#<?php echo e($trx->transaction_id); ?></small></td>
-                          <td class="align-middle">
-                            <div class="d-flex align-items-center">
-                              <div class="avatar avatar-sm mr-2">
-                                <span class="avatar-title rounded-circle bg-light text-muted">
-                                  <?php echo e(substr($trx->user->full_name ?? 'G', 0, 1)); ?>
+            <div class="row items-align-baseline">
+                <!-- REVENUE CARD -->
+                <div class="col-md-12 col-lg-4">
+                    <div class="card shadow eq-card mb-4">
+                        <div class="card-body mb-n3">
+                            <div class="row items-align-baseline h-100">
+                                <div class="col-md-6 my-3">
+                                    <p class="mb-0"><strong class="mb-0 text-uppercase text-muted">Revenue</strong></p>
+                                    <h3>Rp. <?php echo e(number_format($totalRevenue, 0, ',', '.')); ?></h3>
+                                    <p class="text-muted">Total revenue all time successful payments membership</p>
+                                </div>
+                                <div class="col-md-6 my-4 text-center">
+                                    <div class="chart-box mx-4">
+                                        <div id="dashboardRadialWidget"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 border-top py-3">
+                                    <p class="mb-1"><strong class="text-muted">This Week</strong></p>
+                                    <h4 class="mb-0">Rp. <?php echo e(number_format($thisWeekRevenue, 0, ',', '.')); ?></h4>
+                                    <p class="small text-muted mb-0">
+                                        <span class="<?php echo e($revenueGrowth >= 0 ? 'text-success' : 'text-danger'); ?>">
+                                            <?php echo e($revenueGrowth >= 0 ? '+' : ''); ?><?php echo e($revenueGrowth); ?>% Last week
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-md-6 border-top py-3">
+                                    <p class="mb-1"><strong class="text-muted">Success Rate</strong></p>
+                                    <h4 class="mb-0"><?php echo e($successRate); ?>%</h4>
+                                    <p class="small text-muted mb-0"><span>Paid transactions this month</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- KONTEN & PENERBITAN CARD -->
+                <div class="col-md-12 col-lg-4">
+                    <div class="card shadow eq-card mb-4">
+                        <div class="card-body mb-n3">
+                            <div class="row items-align-baseline h-100">
+                                <div class="col-12 my-3">
+                                    <p class="mb-0"><strong class="mb-0 text-uppercase text-muted">Konten & Penerbitan</strong></p>
+                                    <h3><?php echo e($totalContent); ?></h3>
+                                </div>
+                                <div class="col-md-6 border-top py-3">
+                                    <p class="mb-1"><strong class="text-muted">Buku</strong></p>
+                                    <h4 class="mb-0"><?php echo e($totalBooks); ?></h4>
+                                    <p class="small text-muted mb-0"><span>Total Published</span></p>
+                                </div>
+                                <div class="col-md-6 border-top py-3">
+                                    <p class="mb-1"><strong class="text-muted">Jurnal</strong></p>
+                                    <h4 class="mb-0"><?php echo e($totalJournals); ?></h4>
+                                    <p class="small text-muted mb-0"><span>Total Published</span></p>
+                                </div>
+                                <div class="col-md-6 border-top py-3">
+                                    <p class="mb-1"><strong class="text-muted">Writer list</strong></p>
+                                    <h4 class="mb-0"><?php echo e($totalWriters); ?></h4>
+                                </div>
+                                <div class="col-md-6 border-top py-3">
+                                    <p class="mb-1"><strong class="text-muted">Keyword list</strong></p>
+                                    <h4 class="mb-0"><?php echo e($totalKeywords); ?></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- USER & MEMBERSHIP CARD -->
+                <div class="col-md-12 col-lg-4">
+                    <div class="card shadow eq-card mb-4">
+                        <div class="card-body mb-n3">
+                            <div class="row items-align-baseline h-100">
+                                <div class="col-12 my-3">
+                                    <p class="mb-0"><strong class="mb-0 text-uppercase text-muted">User & Membership</strong></p>
+                                    <h3><?php echo e($totalUsers); ?></h3>
+                                    <p class="text-muted">Total all user & membership guest</p>
+                                </div>
+                                <div class="col-md-4 border-top py-3">
+                                    <p class="mb-1"><strong class="text-muted">Regular User</strong></p>
+                                    <h4 class="mb-0"><?php echo e($regularUsers); ?></h4>
+                                </div>
+                                <div class="col-md-4 border-top py-3">
+                                    <p class="mb-1"><strong class="text-muted">With Membership</strong></p>
+                                    <h4 class="mb-0"><?php echo e($activeMemberships); ?></h4>
+                                </div>
+                                <div class="col-md-4 border-top py-3">
+                                    <p class="mb-1"><strong class="text-muted">Guest Member</strong></p>
+                                    <h4 class="mb-0"><?php echo e($guestMemberships); ?></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BALANCE & CHART -->
+            <div class="mb-2 align-items-center">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="row mt-1 align-items-center">
+                            <div class="col-12 col-lg-4 text-left pl-4">
+                                <p class="mb-1 small text-muted">Balance</p>
+                                <span class="h3">Rp. <?php echo e(number_format($totalRevenue, 0, ',', '.')); ?></span>
+                                <span class="small <?php echo e($monthlyGrowth >= 0 ? 'text-success' : 'text-danger'); ?>">
+                                    <?php echo e($monthlyGrowth >= 0 ? '+' : ''); ?><?php echo e($monthlyGrowth); ?>%
                                 </span>
-                              </div>
-                              <div>
-                                <span
-                                  class="d-block font-weight-bold text-dark"><?php echo e($trx->user->full_name ?? 'Guest'); ?></span>
-                                <small class="text-muted"><?php echo e($trx->sender_bank); ?></small>
-                              </div>
+                                <span class="fe fe-arrow-<?php echo e($monthlyGrowth >= 0 ? 'up' : 'down'); ?> <?php echo e($monthlyGrowth >= 0 ? 'text-success' : 'text-danger'); ?> fe-12"></span>
+                                <p class="text-muted mt-2">Total revenue dari semua transaksi yang berhasil</p>
                             </div>
-                          </td>
-                          <td class="align-middle font-weight-bold">Rp <?php echo e(number_format($trx->amount, 0, ',', '.')); ?></td>
-                          <td class="align-middle small"><?php echo e($trx->created_at->format('d/m/Y H:i')); ?></td>
-                          <td class="align-middle">
-                            <?php if($trx->status == 'paid'): ?>
-                              <span class="badge badge-pill badge-success px-2">Lunas</span>
-                            <?php elseif($trx->status == 'pending'): ?>
-                              <span class="badge badge-pill badge-warning px-2">Pending</span>
-                            <?php else: ?>
-                              <span class="badge badge-pill badge-danger px-2">Gagal</span>
-                            <?php endif; ?>
-                          </td>
-                          <td class="align-middle text-right">
-                            <div class="dropdown">
-                              <button class="btn btn-sm dropdown-toggle more-vertical text-muted" type="button"
-                                data-toggle="dropdown"></button>
-                              <div class="dropdown-menu dropdown-menu-right shadow-sm">
-                                <a class="dropdown-item" href="#"><i class="fe fe-eye mr-2"></i> Detail</a>
-                                <a class="dropdown-item" href="#"><i class="fe fe-edit mr-2"></i> Edit</a>
-                              </div>
+                            <div class="col-6 col-lg-2 text-center py-4">
+                                <p class="mb-1 small text-muted">Today</p>
+                                <span class="h3">Rp. <?php echo e(number_format($todayRevenue, 0, ',', '.')); ?></span><br />
                             </div>
-                          </td>
-                        </tr>
-                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                        <tr>
-                          <td colspan="6" class="text-center py-5 text-muted">
-                            <i class="fe fe-clipboard fe-24 d-block mb-2"></i>
-                            Tidak ada data transaksi terbaru.
-                          </td>
-                        </tr>
-                      <?php endif; ?>
-                    </tbody>
-                  </table>
+                            <div class="col-6 col-lg-2 text-center py-4 mb-2">
+                                <p class="mb-1 small text-muted">Goal Value</p>
+                                <span class="h3">Rp. <?php echo e(number_format($monthlyTarget, 0, ',', '.')); ?></span><br />
+                            </div>
+                            <div class="col-6 col-lg-2 text-center py-4">
+                                <p class="mb-1 small text-muted">Completions</p>
+                                <span class="h3"><?php echo e($totalCompletions); ?></span><br />
+                            </div>
+                            <div class="col-6 col-lg-2 text-center py-4">
+                                <p class="mb-1 small text-muted">Conversion</p>
+                                <span class="h3"><?php echo e($conversionRate); ?>%</span><br />
+                            </div>
+                        </div>
+                        <div class="chartbox mr-4">
+                            <div id="dashboardAreaChart"></div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
 
+            <div class="row">
+                <!-- Recent Activity -->
+                <div class="col-md-12 col-lg-4 mb-4">
+                    <div class="card timeline shadow">
+                        <div class="card-header">
+                            <strong class="card-title">Recent Activity</strong>
+                            <a class="float-right small text-muted" href="#!">View all</a>
+                        </div>
+                        <div class="card-body" data-simplebar style="height:355px; overflow-y: auto; overflow-x: hidden;">
+                            <?php $__empty_1 = true; $__currentLoopData = $recentActivities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $activity): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                            <div class="pb-3 timeline-item item-<?php echo e($activity->action_type == 'PROMOTE' ? 'success' : 
+                                ($activity->action_type == 'DEMOTE' ? 'warning' : 'primary')); ?>">
+                                <div class="pl-5">
+                                    <div class="mb-1">
+                                        <strong><?php echo e($activity->actor ? $activity->actor->email : 'System'); ?></strong>
+                                        <span class="text-muted small mx-2"><?php echo e($activity->description); ?></span>
+                                        <?php if($activity->target): ?>
+                                        <strong class="text-primary"><?php echo e($activity->target->email); ?></strong>
+                                        <?php endif; ?>
+                                    </div>
+                                    <p class="small text-muted">
+                                        <span class="badge badge-<?php echo e($activity->action_type == 'PROMOTE' ? 'success' : 
+                                            ($activity->action_type == 'DEMOTE' ? 'warning' : 'info')); ?>">
+                                            <?php echo e($activity->action_type); ?>
+
+                                        </span>
+                                        <span class="badge badge-light ml-1"><?php echo e($activity->created_at->diffForHumans()); ?></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                            <p class="text-muted text-center">No recent activities</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="col-md-12 col-lg-8">
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <strong class="card-title">Recent Transactions</strong>
+                            <a class="float-right small text-muted" href="#!">View all</a>
+                        </div>
+                        <div class="card-body my-n2">
+                            <table class="table table-striped table-hover table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>User</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $__empty_1 = true; $__currentLoopData = $recentTransactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $transaction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                    <tr>
+                                        <td><?php echo e($transaction->transaction_id); ?></td>
+                                        <th scope="col"><?php echo e($transaction->user->first_name ?? 'N/A'); ?> <?php echo e($transaction->user->last_name ?? ''); ?></th>
+                                        <td>Rp. <?php echo e(number_format($transaction->amount, 0, ',', '.')); ?></td>
+                                        <td>
+                                            <span class="badge badge-<?php echo e($transaction->status == 'paid' ? 'success' : ($transaction->status == 'pending' ? 'warning' : 'danger')); ?>">
+                                                <?php echo e(ucfirst($transaction->status)); ?>
+
+                                            </span>
+                                        </td>
+                                        <td><?php echo e($transaction->created_at->format('d/m/Y')); ?></td>
+                                    </tr>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted">No recent transactions</td>
+                                    </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-
-
-      var dates = <?php echo json_encode($chartDates); ?>;
-      var dataRevenue = <?php echo json_encode($dataRevenue); ?>;
-      var dataMembers = <?php echo json_encode($dataMembers); ?>;
-      var dataTransactions = <?php echo json_encode($dataTransactions); ?>;
-
-      var options = {
-        series: [{
-          name: 'Pendapatan',
-          data: dataRevenue
-        }, {
-          name: 'Member Baru',
-          data: dataMembers
-        }, {
-          name: 'Total Transaksi',
-          data: dataTransactions
-        }],
+<?php $__env->startPush('scripts'); ?>
+<script>
+    // Update Radialbar Widget dengan JUMLAH transaksi sukses bulan ini
+    var radialbarWidgetOptions = {
+        series: [<?php echo e($successTransactionsThisMonth); ?>], // Jumlah transaksi sukses
         chart: {
-          height: 350,
-          type: 'area',
-          fontFamily: 'sans-serif',
-          toolbar: { show: false },
-          zoom: { enabled: false }
+            height: 120,
+            type: 'radialBar'
         },
-        dataLabels: { enabled: false },
-        stroke: {
-          curve: 'smooth',
-          width: 2
+        theme: {
+            mode: colors.chartTheme
+        },
+        plotOptions: {
+            radialBar: {
+                hollow: {
+                    size: '70%'
+                },
+                track: {
+                    background: colors.borderColor
+                },
+                dataLabels: {
+                    show: true,
+                    name: {
+                        fontSize: '0.875rem',
+                        fontWeight: 400,
+                        offsetY: -10,
+                        show: false,
+                        color: colors.mutedColor,
+                        fontFamily: base.defaultFontFamily
+                    },
+                    value: {
+                        formatter: function(val) {
+                            return parseInt(val) // Tampilkan angka asli, bukan persen
+                        },
+                        fontSize: '1.53125rem',
+                        fontWeight: 700,
+                        fontFamily: base.defaultFontFamily,
+                        offsetY: 10,
+                        show: true,
+                        color: colors.headingColor
+                    }
+                }
+            }
         },
         fill: {
-          type: 'gradient',
-          gradient: {
-            shadeIntensity: 1,
-            opacityFrom: 0.6,
-            opacityTo: 0.2,
-            stops: [0, 90, 100]
-          }
+            type: 'gradient',
+            gradient: {
+                shade: 'light',
+                type: 'diagonal2',
+                shadeIntensity: 0.2,
+                gradientFromColors: [extend.primaryColorLighter],
+                gradientToColors: [base.primaryColor],
+                inverseColors: true,
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [20, 100]
+            }
+        },
+        stroke: {
+            lineCap: 'round'
+        }
+    };
+
+    var radialbarWidget = document.querySelector("#dashboardRadialWidget");
+    if (radialbarWidget) {
+        var radialbarWidgetChart = new ApexCharts(radialbarWidget, radialbarWidgetOptions);
+        radialbarWidgetChart.render();
+    }
+
+    // Update Area Chart dengan data dari controller
+    var areaChartOptions = {
+        series: [{
+            name: 'Revenue',
+            data: <?php echo $chartRevenue; ?>
+
+        }, {
+            name: 'Transactions',
+            data: <?php echo $chartTransactions; ?>
+
+        }],
+        chart: {
+            type: 'area',
+            height: 350,
+            background: 'transparent',
+            stacked: false,
+            toolbar: {
+                show: false
+            },
+            zoom: {
+                enabled: false
+            }
+        },
+        theme: {
+            mode: colors.chartTheme
         },
         xaxis: {
-          categories: dates,
-          axisBorder: { show: false },
-          axisTicks: { show: false },
-          labels: {
-            style: { colors: '#8e8da4', fontSize: '12px' }
-          }
-        },
-        yaxis: {
-          labels: {
-            style: { colors: '#8e8da4', fontSize: '12px' },
-            formatter: function (val, opts) {
-              if (opts.seriesIndex === 0 && val > 1000) {
-                return "Rp " + (val / 1000).toFixed(0) + "k";
-              }
-              return val;
+            type: 'datetime',
+            categories: <?php echo $chartDates; ?>,
+            labels: {
+                show: true,
+                trim: false,
+                style: {
+                    colors: colors.mutedColor,
+                    fontFamily: base.defaultFontFamily
+                }
+            },
+            axisBorder: {
+                show: false
             }
-          }
         },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth',
+            width: 2
+        },
+        fill: {
+            type: 'solid',
+            opacity: 0.3
+        },
+        colors: chartColors,
         grid: {
-          borderColor: '#f1f1f1',
-          strokeDashArray: 4,
-          padding: { left: 10, right: 10 }
-        },
-        colors: ['#6c5ce7', '#00b894', '#0984e3'],
-        legend: {
-          position: 'top',
-          horizontalAlign: 'right'
-        },
-        tooltip: {
-          y: {
-            formatter: function (val, { seriesIndex }) {
-              if (seriesIndex === 0) {
-                return "Rp " + new Intl.NumberFormat('id-ID').format(val);
-              }
-              return val;
-            }
-          }
+            show: true,
+            borderColor: colors.borderColor
         }
-      };
+    };
 
-      var chart = new ApexCharts(document.querySelector("#myRealChart"), options);
-      chart.render();
-    });
-  </script>
+    var areachartCtn = document.querySelector("#dashboardAreaChart");
+    if (areachartCtn) {
+        var areachart = new ApexCharts(areachartCtn, areaChartOptions);
+        areachart.render();
+    }
+</script>
+<?php $__env->stopPush(); ?>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('backend.layouts.main', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\Ritecs\resources\views/backend/pages/dashboard.blade.php ENDPATH**/ ?>
