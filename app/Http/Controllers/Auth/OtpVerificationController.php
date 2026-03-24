@@ -14,10 +14,6 @@ use App\Models\ActivationRequest;
 
 class OtpVerificationController extends Controller
 {
-    // ==========================================
-    // KONFIGURASI TIMER (DETIK)
-    // Ubah angka ini, maka frontend akan otomatis mengikuti
-    // ==========================================
     private $otpWaitTime = 10; 
 
     public function showVerificationForm($userId)

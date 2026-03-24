@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Auth\ApiAuthController;
+use App\Http\Controllers\Api\BookController;
 use App\Models\MembershipCardSetting;
+use App\Models\Membership; 
+use App\Models\Book;
 
 Route::prefix('auth')->group(function () {
     Route::post('/request-otp', [ApiAuthController::class, 'requestOtp']);
@@ -126,7 +129,6 @@ Route::get('/home-data', function () {
 });
 
 Route::get('/books', function () {
-    // Mengambil data buku beserta relasi penulis dan kategori
     $books = \App\Models\Book::with(['writers', 'categories'])->latest()->get();
     
     return response()->json([
@@ -134,18 +136,21 @@ Route::get('/books', function () {
         'data' => $books
     ]);
 });
-
+Route::get('/journals', function () {
+    $journals = \App\Models\Journal::with('keywords')->latest('journal_id')->get();
+    
+    return response()->json([
+        'status' => 'success',
+        'data' => $journals
+    ]);
+});
 // Endpoint Publik untuk mengambil Daftar Member
 Route::get('/members', function (\Illuminate\Http\Request $request) {
     $query = \App\Models\Membership::with('user')
         ->select('memberships.*')
-        ->addSelect('users.first_name', 'users.last_name', 'users.img_path') // Bawa foto profil sekalian!
+        ->addSelect('users.first_name', 'users.last_name', 'users.img_path') 
         ->leftJoin('users', 'memberships.user_id', '=', 'users.user_id');
-
-    // Kita urutkan dari member terbaru
     $query->orderBy('memberships.created_at', 'desc');
-
-    // Ambil 50 data dulu agar Android tidak berat (bisa pakai pagination nanti)
     $memberships = $query->take(50)->get();
 
     return response()->json([
@@ -223,7 +228,6 @@ Route::get('/haki', function () {
 
 // Endpoint Publik untuk Pusat Pelatihan
 Route::get('/training-center', function () {
-    // Sesuaikan path model dengan struktur folder Laravel-mu
     $trainings = \App\Models\Frontend\Training\Training::all();
     $haki_services = \App\Models\Frontend\Training\HakiService::all();
     $haki_title = \App\Models\Setting::where('key', 'training_haki_title')->first();
@@ -283,5 +287,5 @@ Route::post('/contact-send', function (\Illuminate\Http\Request $request) {
     
     return response()->json(['status' => 'success', 'message' => 'Pesan Anda telah berhasil terkirim!']);
 });
-Route::post('/books/{id}/visit', [\App\Http\Controllers\Api\BookController::class, 'incrementVisit']);
-Route::post('/books/{id}/download', [\App\Http\Controllers\Api\BookController::class, 'incrementDownload']);
+Route::post('/books/{id}/visit', [BookController::class, 'incrementVisit']);
+Route::post('/books/{id}/download', [BookController::class, 'incrementDownload']);
