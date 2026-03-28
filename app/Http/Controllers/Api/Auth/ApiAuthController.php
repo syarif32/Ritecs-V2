@@ -36,12 +36,13 @@ class ApiAuthController extends Controller
         }
 
         $token = $user->createToken('MobileAppToken')->plainTextToken;
-
+        $role = $user->getRoleNames()->first() ?? 'user';
         return response()->json([
             'status' => 'success',
             'message' => 'Login berhasil',
             'data' => [
                 'user' => $user,
+                'role' => $role,
                 'token' => $token
             ]
         ], 200);
@@ -128,12 +129,13 @@ class ApiAuthController extends Controller
         ]);
 
         $token = $user->createToken('MobileAppToken')->plainTextToken;
-
+        $role = $user->getRoleNames()->first() ?? 'user';
         return response()->json([
             'status' => 'success',
             'message' => 'Verifikasi berhasil.',
             'data' => [
                 'user' => $user,
+                'role' => $role,
                 'token' => $token
             ]
         ], 200);
@@ -276,12 +278,13 @@ class ApiAuthController extends Controller
 
       
         $token = $user->createToken('MobileAppToken')->plainTextToken;
-
+        $role = $user->getRoleNames()->first() ?? 'user';
         return response()->json([
             'status' => 'success',
             'message' => 'Login Google berhasil',
             'data' => [
                 'user' => $user,
+                'role' => $role,
                 'token' => $token
             ]
         ], 200);

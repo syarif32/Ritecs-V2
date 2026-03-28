@@ -8,13 +8,19 @@ use App\Models\Bank;
 class BankController extends Controller
 {
     // INDEX
-    public function index()
+  public function index(Request $request) 
     {
+        
+        if ($request->expectsJson()) {
+            $banks = Bank::orderBy('created_at','desc')->get();
+            return response()->json(['status' => 'success', 'data' => $banks]);
+        }
+        // ---------------------------------
+
         $banks = Bank::orderBy('created_at','desc')->paginate(10);
         return view('backend.pages.banks.index', compact('banks'), ['title' => 'Bank Data']);
     }
 
-    // CREATE
     public function create()
     {
         return view('backend.pages.banks.create', ['title' => 'Add Bank']);
@@ -30,11 +36,15 @@ class BankController extends Controller
         ]);
 
         Bank::create($request->all());
+        if ($request->expectsJson()) {
+            return response()->json(['status' => 'success', 'message' => 'Bank created successfully.']);
+        }
+        // ---------------------------------
 
         return redirect()->route('admin.banks.index')->with('success', 'Bank created successfully.');
     }
 
-    // EDIT
+    // EDIT (Tidak perlu diubah)
     public function edit($id)
     {
         $bank = Bank::findOrFail($id);
@@ -53,15 +63,22 @@ class BankController extends Controller
         ]);
 
         $bank->update($request->all());
+        if ($request->expectsJson()) {
+            return response()->json(['status' => 'success', 'message' => 'Bank updated successfully.']);
+        }
+        // ---------------------------------
 
         return redirect()->route('admin.banks.index')->with('success', 'Bank updated successfully.');
     }
 
     // DELETE
-    public function destroy($id)
+    public function destroy(Request $request, $id) 
     {
         $bank = Bank::findOrFail($id);
         $bank->delete();
+        if ($request->expectsJson()) {
+            return response()->json(['status' => 'success', 'message' => 'Bank deleted successfully.']);
+        }
 
         return redirect()->route('admin.banks.index')->with('success', 'Bank deleted successfully.');
     }

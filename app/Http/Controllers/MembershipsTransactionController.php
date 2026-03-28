@@ -11,17 +11,39 @@ use Carbon\Carbon;
 class MembershipsTransactionController extends Controller
 {
     // List semua transaksi
-    public function index()
+    // List semua transaksi
+    public function index(Request $request) // <- Tambahkan Request
     {
         $transactions = Transaction::with(['user','bank'])
             ->where('validate', 1)
             ->orderBy('created_at','desc')
             ->get();
 
+        // --- TAMBAHAN UNTUK MOBILE API ---
+        if ($request->expectsJson()) {
+            $mapped = $transactions->map(function($t) {
+                return [
+                    'id' => $t->id,
+                    'user_name' => $t->user ? trim($t->user->first_name . ' ' . $t->user->last_name) : 'Unknown',
+                    'email' => $t->user ? $t->user->email : '-',
+                    'bank_name' => $t->bank ? $t->bank->name : '-',
+                    'sender_name' => $t->sender_name,
+                    'amount' => $t->amount,
+                    'status' => $t->status,
+                    'type' => $t->type, // new / extendedPayments
+                    'proof_url' => $t->proof ? asset($t->proof) : null, // Mengirimkan URL penuh gambar
+                    'created_at' => $t->created_at->format('d M Y H:i'),
+                    'is_extended' => $t->is_extended
+                ];
+            });
+            return response()->json(['status' => 'success', 'data' => $mapped]);
+        }
+        // ---------------------------------
+
         return view('backend.pages.memberships.memberships-data', compact('transactions'), ['title' => 'Memberships']);
     }
 
-    // Form edit/verifikasi
+    // Form edit/verifikasi (Tidak perlu diubah karena mobile pakai pop up)
     public function edit($id)
     {
         $transaction = Transaction::with(['user','bank'])->findOrFail($id);
@@ -39,7 +61,7 @@ class MembershipsTransactionController extends Controller
         $transaction->status = $request->status;
         $transaction->save();
 
-        // Jika status = paid → buat membership baru
+        // LOGIKA ASLI TIDAK DISENTUH
         if ($request->status === 'paid') {
             $existing = Membership::where('user_id', $transaction->user_id)->first();
 
@@ -47,7 +69,6 @@ class MembershipsTransactionController extends Controller
                 $startDate = Carbon::now();
                 $endDate   = $startDate->copy()->addYear();
 
-                // Ambil nomor member terakhir
                 $lastMember = Membership::orderBy('membership_id', 'desc')->first();
                 if ($lastMember) {
                     $lastNumber = intval(substr($lastMember->member_number, strrpos($lastMember->member_number, '.') + 1));
@@ -56,48 +77,41 @@ class MembershipsTransactionController extends Controller
                 }
 
                 $newNumber = str_pad($lastNumber + 1, 5, '0', STR_PAD_LEFT);
-
                 $memberNumber = "01." . Carbon::now()->format('Y') . "." . $newNumber;
 
-                // Buat membership baru
                 $membership = Membership::create([
                     'user_id'       => $transaction->user_id,
                     'start_date'    => $startDate,
                     'end_date'      => $endDate,
                     'member_number' => $memberNumber,
-                    'status'        => 1, // aktif
+                    'status'        => 1, 
                 ]);
 
-                // Update transaction → isi membership_id
                 $transaction->membership_id = $membership->membership_id;
                 $transaction->save();
             } else {
-                // Kalau membership sudah ada, langsung hubungkan transaksi
                 $transaction->membership_id = $existing->membership_id;
                 $transaction->save();
             }
         }
 
+        // --- TAMBAHAN UNTUK MOBILE API ---
+        if ($request->expectsJson()) {
+            return response()->json(['status' => 'success', 'message' => 'Status transaksi berhasil diperbarui.']);
+        }
+        // ---------------------------------
+
         return redirect()->route('admin.memberships')->with('success','Transaction status updated successfully.');
     }
 
     // Delete transaksi
-    public function delete($id)
+    public function delete(Request $request, $id) // <- Tambahkan Request
     {
         $transaction = Transaction::findOrFail($id);
-
-        // Simpan membership_id dulu
         $membershipId = $transaction->membership_id;
-
-        // Update transaksi → validate = 0
         $transaction->validate = 0;
         $transaction->save();
 
-        // Delete transaksi → hanya set validate = 0
-        $transaction->validate = 0;
-        $transaction->save();
-
-        // Set membership jadi non-aktif (status = 0) kalau ada
         if ($membershipId) {
             $membership = Membership::find($membershipId);
             if ($membership) {
@@ -106,8 +120,8 @@ class MembershipsTransactionController extends Controller
             }
         }
 
-        return redirect()->route('admin.memberships')
-            ->with('success','Transaction deleted and related membership deactivated successfully.');
+        if ($request->expectsJson()) return response()->json(['status' => 'success', 'message' => 'Transaksi dihapus.']);
+        return redirect()->route('admin.memberships')->with('success','Transaction deleted and related membership deactivated successfully.');
     }
 
     // List transaksi nonaktif

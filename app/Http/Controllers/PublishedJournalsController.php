@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Journal;
 use App\Models\Keyword;
-use Illuminate\Support\Facades\File; // tambahkan di atas
+use Illuminate\Support\Facades\File; 
 use App\Models\ContentLog;
 use Illuminate\Support\Facades\Auth;
 

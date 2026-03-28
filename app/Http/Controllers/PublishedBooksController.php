@@ -13,33 +13,60 @@ use Illuminate\Support\Facades\Auth;
 class PublishedBooksController extends Controller
 {
     // List semua buku
-    public function bookData()
+    public function bookData(Request $request) 
     {
         $books = Book::with([
             'categories', 
             'writers' => function($query) {
                 $query->orderBy('book_writer.order', 'asc');
             }
-        ])->get();
+        ])->orderBy('created_at', 'desc')->get();
         
-        return view('backend.pages.published-books.books-data', compact('books'), 
-        ['title' => 'Book Data']);
+        // --- TAMBAHAN UNTUK MOBILE API ---
+        if ($request->expectsJson()) {
+            $mapped = $books->map(function($b) {
+                return [
+                    'book_id' => $b->book_id,
+                    'title' => $b->title,
+                    'synopsis' => $b->synopsis,
+                    'publisher' => $b->publisher,
+                    'isbn' => $b->isbn,
+                    'publish_date' => $b->publish_date,
+                    'cover_path' => $b->cover_path ? asset($b->cover_path) : null,
+                    'categories' => $b->categories->map(function($c) { return ['id' => $c->id, 'name' => $c->name]; }),
+                    'writers' => $b->writers->map(function($w) { return ['id' => $w->id, 'name' => $w->name]; })
+                ];
+            });
+            return response()->json(['status' => 'success', 'data' => $mapped]);
+        }
+        // ---------------------------------
+
+        return view('backend.pages.published-books.books-data', compact('books'), ['title' => 'Book Data']);
     }
-    // Form create
-    public function bookCreate()
+
+    // Form create 
+    public function bookCreate(Request $request) // <- Tambah Request
     {
         $categories = Category::all();
         $writers    = Writer::all();
         $users      = User::select('user_id','first_name','last_name','email')->get();
 
-        return view(
-            'backend.pages.published-books.add-books',
-            compact('categories', 'writers', 'users'),
-            ['title' => 'Book Data']
-        );
+        // --- TAMBAHAN UNTUK MOBILE API ---
+        if ($request->expectsJson()) {
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'categories' => $categories->map(fn($c) => ['id' => $c->id, 'name' => $c->name]),
+                    'writers' => $writers->map(fn($w) => ['id' => $w->id, 'name' => $w->name])
+                ]
+            ]);
+        }
+        // ---------------------------------
+
+        return view('backend.pages.published-books.add-books', compact('categories', 'writers', 'users'), ['title' => 'Book Data']);
     }
 
-    // Store buku baru dengan urutan penulis
+    // Store buku baru
     public function bookStore(Request $request)
     {
         $request->validate([
@@ -53,7 +80,7 @@ class PublishedBooksController extends Controller
 
         $book = new Book();
         $book->title = $request->title;
-        $book->synopsis = $request->Synopsis ?? null;
+        $book->synopsis = $request->Synopsis ?? null; 
         $book->publisher = $request->publisher ?? null;
         $book->pages = $request->pages ?? null;
         $book->width = $request->width ?? null;
@@ -65,11 +92,8 @@ class PublishedBooksController extends Controller
         $book->print_price = $request->print_price ?? null;
         $book->ebook_price = $request->ebook_price ?? null;
 
-        // Upload cover
         $destination = public_assets_path('assets/published/books'); 
-        if (!file_exists($destination)) {
-            mkdir($destination, 0755, true);
-        }
+        if (!file_exists($destination)) mkdir($destination, 0755, true);
         
         if ($request->hasFile('coverImage')) {
             $filename = time() . '_' . $request->file('coverImage')->getClientOriginalName();
@@ -87,39 +111,33 @@ class PublishedBooksController extends Controller
             'description'  => "Menambahkan buku baru berjudul: " . $book->title
         ]);
 
-        // Sync categories
         $book->categories()->sync($request->category);
         
-        // Sync writers DENGAN URUTAN
         $writersWithOrder = [];
         foreach ($request->writter as $index => $writerId) {
             $writersWithOrder[$writerId] = ['order' => $index + 1];
         }
         $book->writers()->sync($writersWithOrder);
 
+        // --- TAMBAHAN UNTUK MOBILE API ---
+        if ($request->expectsJson()) return response()->json(['status' => 'success', 'message' => 'Book added successfully.']);
         return redirect()->route('admin.published-books')->with('success', 'Book added successfully.');
     }
 
     // Edit form
     public function bookEdit($id)
     {
-        $book       = Book::with(['categories', 'writers' => function($query) {
-            $query->orderBy('book_writer.order', 'asc');
-        }])->findOrFail($id);
-        
+        $book = Book::with(['categories', 'writers' => function($query) { $query->orderBy('book_writer.order', 'asc'); }])->findOrFail($id);
         $categories = Category::all();
         $writers    = Writer::all();
         $users      = User::select('user_id','first_name','last_name','email')->get();
-
-        return view('backend.pages.published-books.edit-books',
-            compact('book', 'categories', 'writers', 'users'),
-            ['title' => 'Book Data']
-        );
+        return view('backend.pages.published-books.edit-books', compact('book', 'categories', 'writers', 'users'), ['title' => 'Book Data']);
     }
 
-    // Update dengan urutan penulis
+    // Update
     public function bookUpdate(Request $request, $id)
     {
+        // LOGIKA ASLI TIDAK DISENTUH
         $book = Book::findOrFail($id);
     
         $request->validate([
@@ -146,24 +164,16 @@ class PublishedBooksController extends Controller
     
         if ($request->hasFile('coverImage')) {
             $defaultCover = 'assets/published/books/book_default.png';
-        
-            // Hapus cover lama jika bukan default
             if ($book->cover_path && $book->cover_path !== $defaultCover) {
                 $oldPath = public_assets_path($book->cover_path);
-                if (file_exists($oldPath)) {
-                    unlink($oldPath);
-                }
+                if (file_exists($oldPath)) unlink($oldPath);
             }
         
-            // Pastikan folder tujuan ada
             $destination = public_assets_path('assets/published/books');
-            if (!file_exists($destination)) {
-                mkdir($destination, 0755, true);
-            }
+            if (!file_exists($destination)) mkdir($destination, 0755, true);
             
             $filename = time() . '_' . $request->file('coverImage')->getClientOriginalName();
             $request->file('coverImage')->move($destination, $filename);
-            
             $book->cover_path = 'assets/published/books/' . $filename;
         }
 
@@ -177,31 +187,30 @@ class PublishedBooksController extends Controller
             'description'  => "Memperbarui buku berjudul: " . $book->title
         ]);
 
-        // Sync categories
         $book->categories()->sync($request->category);
         
-        // Sync writers DENGAN URUTAN
         $writersWithOrder = [];
         foreach ($request->writter as $index => $writerId) {
             $writersWithOrder[$writerId] = ['order' => $index + 1];
         }
         $book->writers()->sync($writersWithOrder);
     
+        // --- TAMBAHAN UNTUK MOBILE API ---
+        if ($request->expectsJson()) return response()->json(['status' => 'success', 'message' => 'Book updated successfully.']);
+        // ---------------------------------
+
         return redirect()->route('admin.published-books')->with('success', 'Book updated successfully.');
     }
 
     // Delete
-    public function bookDelete($id)
+    public function bookDelete(Request $request, $id) // <- Tambah Request
     {
         $book = Book::findOrFail($id);
-
         $defaultCover = 'assets/published/books/book_default.png';
 
         if ($book->cover_path && $book->cover_path !== $defaultCover) {
             $oldPath = public_assets_path($book->cover_path);
-            if (file_exists($oldPath)) {
-                unlink($oldPath);
-            }
+            if (file_exists($oldPath)) unlink($oldPath);
         }
 
         $book->categories()->detach();
@@ -216,6 +225,8 @@ class PublishedBooksController extends Controller
             'description'  => "Menghapus buku berjudul: " . $book->title
         ]);
         
+        if ($request->expectsJson()) return response()->json(['status' => 'success', 'message' => 'Book deleted successfully.']);
+
         return redirect()->route('admin.published-books')->with('success', 'Book deleted successfully.');
     }
 }

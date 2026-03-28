@@ -8,6 +8,8 @@ use App\Models\ActivationRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\AdminLog;
+use Illuminate\Support\Facades\Hash;
 class ActivationRequestController extends Controller
 {
     /**
